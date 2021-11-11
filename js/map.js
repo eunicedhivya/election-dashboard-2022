@@ -74,6 +74,18 @@ function drawAssemblyMap(selector, settings){
             })
             .attr('stroke', "#333")
             .attr('stroke-width', "1")
+            .attr('fill', function(d,i){
+                return "#ccc";
+                // var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
+                //     return obj["constNo"] === d.properties.ac;
+                // })
+
+                // // console.log(fdTrendData2017[0])
+
+                // // enter the filtered data in abreviation and colors object
+                // return partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]];
+                
+            })
             .on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
             // .attr('data-color', function(d,i){
@@ -87,18 +99,7 @@ function drawAssemblyMap(selector, settings){
             //     return partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]];
                 
             // })
-            .attr('fill', function(d,i){
-                return "#ccc";
-                // var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-                //     return obj["constNo"] === d.properties.ac;
-                // })
-
-                // // console.log(fdTrendData2017[0])
-
-                // // enter the filtered data in abreviation and colors object
-                // return partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]];
-                
-            })
+            
             // .on('click', function(d,i){
                 
                 
@@ -126,25 +127,29 @@ function drawAssemblyMap(selector, settings){
             // d3.select(".margin").html(defaultUPData[0]["margin"].toLocaleString('en-IN'))
 
             // // Select const path by default on load
-            // d3.select(".c"+settings.defaultconst).attr("stroke", "black").attr("stroke-width", "5")
+            d3.select(".c"+settings.defaultconst).attr("stroke", "red")
+            .attr("stroke-width", "5")
 
-            // var selectDropdown = d3.select("#const-list")
+            // ====================================
+            // Create Dropdown from map source            
+            var selectDropdown = d3.select("#const-list")
 
-            // selectDropdown.html(null);
+            selectDropdown.html(null);
 
-            // var options = selectDropdown.selectAll('option')
-            //     .data(stateconst).enter()
-            //     .append('option')
-            //     .attr("value", function (d) { 
-            //         return d.properties.ac; 
-            //     })
-            //     .attr("data-id", function (d) { 
-            //         return d.properties.ac; 
-            //     })
-            //     .text(function (d) {
-            //         // console.log(d.properties.ac_name);
-            //         return d.properties.ac_name;
-            //     }); 
+            var options = selectDropdown.selectAll('option')
+                .data(stateconst).enter()
+                .append('option')
+                .attr("value", function (d) { 
+                    return d.properties.ac; 
+                })
+                .attr("data-id", function (d) { 
+                    return d.properties.ac; 
+                })
+                .text(function (d) {
+                    return d.properties.ac_name;
+                }); 
+
+
 
             $('#const-list').val(settings.defaultconst).trigger('change')
 
@@ -164,28 +169,28 @@ drawAssemblyMap(".map", {
     center: [80.9462, 27.2] // enter lat long from google of UP
 })
 
-function displayConstituency(){
+// function displayConstituency(){
 
-    var chosenOption = $("#const-list").val();
+//     var chosenOption = $("#const-list").val();
 
-    d3.selectAll(".const").attr("stroke", "#fff").attr("stroke-width", "0.5")
+//     d3.selectAll(".const").attr("stroke", "#fff").attr("stroke-width", "0.5")
     
-    d3.select(".c"+chosenOption).attr("stroke", "black").attr("stroke-width", "5")
+//     d3.select(".c"+chosenOption).attr("stroke", "black").attr("stroke-width", "5")
 
-    filterNDisplay2017(parseInt(chosenOption));
+//     filterNDisplay2017(parseInt(chosenOption));
 
-}
+// }
 
 
-function filterNDisplay2017(acno){
+// function filterNDisplay2017(acno){
     
-    var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-        return obj["constNo"] === acno;
-    })
+//     var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
+//         return obj["constNo"] === acno;
+//     })
 
-    d3.select(".const_name").html(fdTrendData2017[0]["constituency"])
-    d3.select(".status").html(fdTrendData2017[0]["status"])
-    d3.select(".leadCandName").html(fdTrendData2017[0]["leadingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["leadingParty"]]+")</span>")
-    d3.select(".trailingCandName").html(fdTrendData2017[0]["trailingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["trailingParty"]]+")</span>")
-    d3.select(".margin").html(fdTrendData2017[0]["margin"].toLocaleString('en-IN'))
-}
+//     d3.select(".const_name").html(fdTrendData2017[0]["constituency"])
+//     d3.select(".status").html(fdTrendData2017[0]["status"])
+//     d3.select(".leadCandName").html(fdTrendData2017[0]["leadingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["leadingParty"]]+")</span>")
+//     d3.select(".trailingCandName").html(fdTrendData2017[0]["trailingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["trailingParty"]]+")</span>")
+//     d3.select(".margin").html(fdTrendData2017[0]["margin"].toLocaleString('en-IN'))
+// }
