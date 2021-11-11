@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <style>
+        svg{
+            background-color: #f8f8f8;
+        }
+        .map path{
+            transition: all 0.2s;
+        }
+        .map path:hover{
+            stroke: #000000;
+            stroke-width: 5;
+        }
+        .map-tooltip {
+            color: #fff;
+            background-color: #000;
+            padding: 10px;
+        }
+        .map-tooltip p{
+            margin-bottom: 0;
+        }
+        .map path.active{
+            fill: #000000;
+            stroke: #000000;
+            stroke-width: 5;
+        }
+
+        /* Card */
+        .card {
+            border: 1px solid #ccc;
+            width: 100% !important;
+            position: relative;
+        }
+        .card .const_name, .card .status, .card .leadCandName, .card .trailingCandName, .card .margin{
+            font-size: 20px;
+        }
+        .card .const_name::before{
+            content:"Constituency ";
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            font-size: 12px;
+            color: #666;
+        }
+        .card .status::before{
+            content:"Status ";
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            font-size: 12px;
+            color: #666;
+        }
+        .card .margin::before{
+            content:"Margin ";
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            font-size: 12px;
+            color: #666;
+        }
+        .card .leadCandName::before{
+            content:"Leading ";
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            font-size: 12px;
+            color: #666;
+        }
+        .card .trailingCandName::before{
+            content:"Trailing ";
+            /* position: absolute;
+            top: 0;
+            left: 0; */
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Uttar Pradesh assembly election 2021</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="map">
+        
+                </div>
+                <div class="const-filter">
+                    <p>Select Constituency
+                        <Select id="const-list" onchange="displayConstituency()"> 
+                            <option value="#">Select Constituency</option>
+                        </Select>
+                    </p>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h1 class="const_name">Constituency Name </h1>
+                        <p class="status">status </p>
+                        <p class="leadCandName">Leading Candidate <span>(party)</span></p>
+                        <p class="trailingCandName">Trailing Candidate <span>(party)</span></p>
+                        <p class="margin">0</span></p>
+                    </div>
+                    <div id="map-table" class="table">
+                        
+                    </div>
+                    </div>
+                  </div>
+                
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Election Dashboard Demo</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                
+            </div>
+            <div class="col-md-6">
+                
+            </div>
+        </div>
+    </section>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/d3.v4.min.js"></script>
+    <script src="js/topojson.v2.min.js"></script>
+    <script src="js/d3-tip.js"></script> <!--used with topojson map-->
+    <script src="js/map.js"></script>
+    <script>
+        var constwisetrenddata2017 = (function() {
+            constwisetrenddata2017 = null;
+            jQuery.ajax({
+                'async': false,
+                'global': false,
+                'dataType': 'json',
+                'cache': false,
+                'url': 'assets/data/up-constituency-trend-2017.json',
+                'success': function(data) {
+                    constwisetrenddata2017 = data;
+                }
+            });
+            return constwisetrenddata2017;
+    })();
+
+    
+
+    </script>
+</body>
+</html>
