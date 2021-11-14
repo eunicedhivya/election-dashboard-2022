@@ -24,9 +24,6 @@ var partycolors = {
     "NISHAD":	"green"
 }
 
-
-
-
 function drawAssemblyMap(selector, settings){
     var width = 430, height = 350; 
     var state = settings.statecode;

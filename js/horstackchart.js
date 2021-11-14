@@ -20,6 +20,9 @@ function drawHorizontalStackChart(selection, stackdata, props) {
     var addContainer = hordivcont.append("div")
         .attr("class", "horbarchart")
 
+    var addLegend = hordivcont.append("div")
+        .attr("class", "horbarchart-legend")
+
     addContainer.selectAll(".block")
         .data(stackdata).enter()
         .append("div").attr("class", "block")
@@ -36,6 +39,10 @@ function drawHorizontalStackChart(selection, stackdata, props) {
         .attr("title", function(d){
             return d[props["label"]] +": "+ d[props["value"]];
         }) //Tooltip
+
+    addLegend.selectAll(".legend-block")
+        .data(stackdata).enter()
+        .append("div").attr("class", "legend-block")
         
 
 } // end of horstackchart
