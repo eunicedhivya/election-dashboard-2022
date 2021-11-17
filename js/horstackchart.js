@@ -1,13 +1,12 @@
-votesharedata = [{"party":"CPIM","votes":58,"votes%":41.42857142857143,"status":"lead"},{"party":"INC","votes":22,"votes%":15.714285714285714,"status":"lead"},{"party":"CPI","votes":19,"votes%":13.571428571428571,"status":"lead"},{"party":"IUML","votes":18,"votes%":12.857142857142858,"status":"lead"},{"party":"IND","votes":6,"votes%":4.285714285714286,"status":"lead"},{"party":"Others","votes":17,"votes%":12.142857142857142,"status":"lead"}]
+votesharedata = [{"party":"BJP","votes":58,"votes%":41.42857142857143,"status":"lead"},{"party":"BSP","votes":22,"votes%":15.714285714285714,"status":"lead"},{"party":"SP","votes":19,"votes%":13.571428571428571,"status":"lead"},{"party":"DDS","votes":18,"votes%":12.857142857142858,"status":"lead"},{"party":"OTH","votes":23,"votes%":16.4285714286,"status":"lead"}]
 
 
 var partycolors={
-    "CPIM": "red",
-    "INC": "green",
-    "CPI": "red",
-    "IUML": "blue",
-    "IND": "grey",
-    "Others": "grey"
+    "BJP": "orange",
+    "BSP": "green",
+    "SP": "aqua",
+    "DDS": "purple",
+    "OTH": "grey"
 }
 
 
@@ -33,16 +32,23 @@ function drawHorizontalStackChart(selection, stackdata, props) {
         .style("width", function(d,i){
             return d[props["valueper"]]+"%";
         })
-        .html(function(d,i){
-            return '<span class="value">'+d[props["value"]]+'</span> <span class="label">'+d[props["label"]]+'</span>';
-        })
-        .attr("title", function(d){
-            return d[props["label"]] +": "+ d[props["value"]];
-        }) //Tooltip
+        // .html(function(d,i){
+        //     return '<span class="value">'+d[props["value"]]+'</span> <span class="label">'+d[props["label"]]+'</span>';
+        // })
+        // .attr("title", function(d){
+        //     return d[props["label"]] +": "+ d[props["value"]];
+        // }) //Tooltip
 
     addLegend.selectAll(".legend-block")
         .data(stackdata).enter()
         .append("div").attr("class", "legend-block")
+        .style("background-color",  function(d,i){
+            return partycolors[d[props["label"]]];
+
+        })
+        .html(function(d,i){
+            return '<span class="partylabel">'+d[props["label"]]+'</span> <span class="value">'+d[props["value"]]+'</span>';
+        })
         
 
 } // end of horstackchart

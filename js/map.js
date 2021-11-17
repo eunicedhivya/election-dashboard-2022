@@ -42,9 +42,40 @@ function drawAssemblyMap(selector, settings){
 
     var tool_tip = d3.tip()
         .attr("class", "map-tooltip")
-        .offset([-15, 0])
+        .offset([60, 154])
         .html(function(d) { 
-            var html = "<p>"+d.properties.ac_name+"</p> "
+            var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
+                    return obj["constNo"] === d.properties.ac;
+                })
+                // partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]    
+
+            var html = '<div class="tooltip-container">'
+            html += '<div class="tooltip-header">'
+            html +=     '<p>'+d.properties.ac_name+'</p>'
+            html +=     '<p>General</p>'
+            html += '</div>'
+            html += '<div class="tooltip-content">'
+            html +=     '<div class="datapoint">'
+            html +=         '<p>2006</p>'
+            html +=         '<span>BJP</span>'
+            html +=     '</div>'
+            html +=     '<div class="datapoint">'
+            html +=         '<p>2017</p>'
+            html +=         '<span style="color:'+partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]+'">'+party_abrev[fdTrendData2017[0]["leadingParty"]]+'</span>'
+            html +=     '</div>'
+            html +=     '<div class="datapoint">'
+            html +=         '<p>2022</p>'
+            html +=         '<span>BJP</span>'
+            html +=     '</div>'
+            html += '</div>'
+            html += '<div class="gotoLink">'
+            html +=     '<a href="#">Go to Constituency >></a>'
+            html += '</div>'
+            html += '</div>'
+
+
+
+
             return html; 
         });
     svg.call(tool_tip);
@@ -69,8 +100,8 @@ function drawAssemblyMap(selector, settings){
             .attr("class", function(d) {
                 return "const c" + d.properties.ac;
             })
-            .attr('stroke', "#333")
-            .attr('stroke-width', "1")
+            .attr('stroke', "#fff")
+            .attr('stroke-width', "0.4")
             .attr('fill', function(d,i){
                 return "#ccc";
                 // var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
