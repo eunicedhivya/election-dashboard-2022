@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", sans-serif;
+      }
+
+      #controls {
+        position: absolute;
+      }
+
+      #inset {
+        position: absolute;
+      }
+      #inset .subunit-boundary {
+        fill: #000;
+        stroke: #000;
+      }
+      #inset .inset-rect {
+        stroke-width: 2px;
+        stroke: tomato;
+        fill: none;
+      }
+
+      #map .subunit, #map .subunit-boundary {
+        vector-effect: non-scaling-stroke;
+      }
+      #map .subunit {
+        fill: #ddd;
+        stroke: #fff;
+        stroke-width: 1px;
+      }
+      #map .subunit.selected {
+        stroke: #000;
+        stroke-width: 2px;
+      }
+      #map .subunit-boundary {
+        fill: none;
+        stroke: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="controls">
+      <select><option>-- Reset --</option></select>
+      <button id="stop-go">Stop</button>
+    </div>
+    <div id="map-wrapper">
+      <div id="inset"></div>
+      <div id="map"></div>
+    </div>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://unpkg.com/d3-moveto@0.0.3/build/d3-moveto.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.20/topojson.min.js"></script>
+    <script src="https://unpkg.com/jeezy@1.12.13/lib/jeezy.js"></script>
+    <script>
+      var match_property = "st_nm";
+      
+      var width = window.innerWidth,
+        height = window.innerHeight;
+
+      var projection = d3.geoMercator();
+      var path = d3.geoPath()
+        .projection(projection);
+
+      var svg = d3.select("#map").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      var g = svg.append("g");
+
+      // set up the inset
+      var inset_margin = {top: 2, bottom: 2, left: 2, right: 2};
+
+      // if the width is greater than the height, the width needs to be proportional to a fixed height
+      if (width > height){
+        var inset_height = 100 - inset_margin.top - inset_margin.bottom,
+          inset_width = (inset_height * width / height) - inset_margin.left - inset_margin.right;
+      } 
+
+      // otherwise, the height needs to be proportional to a fixed width
+      else {
+        var inset_width = 100 - inset_margin.left - inset_margin.right,
+          inset_height = (inset_width * height / width) - inset_margin.top - inset_margin.bottom;
+      }
+
+      var inset_projection = d3.geoMercator();
+      var inset_path = d3.geoPath()
+        .projection(inset_projection);
+
+      var inset_svg = d3.select("#inset").append("svg")
+          .attr("width", inset_width + inset_margin.left + inset_margin.right)
+          .attr("height", inset_height + inset_margin.top + inset_margin.bottom)
+
+      // move the inset to the bottom right of the parent
+      d3.select("#inset")
+          .style("top", +jz.str.keepNumber(svg.style("height")) - +jz.str.keepNumber(inset_svg.style("height")) + "px")
+          .style("left", +jz.str.keepNumber(svg.style("width")) - +jz.str.keepNumber(inset_svg.style("width")) + "px");
+
+      // give the inset a background
+      inset_svg.append("rect")
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", inset_width)
+          .attr("height", inset_height)
+          .style("fill", "white")
+          .style("fill-opacity", .7);
+
+      // this is for the margin
+      var inset_g = inset_svg.append("g")
+          .attr("transform", "translate(" + inset_margin.left + ", " + inset_margin.top + ")");
+
+      d3.queue()
+        .defer(d3.json, "assets/maps/india_2000-2014_state.json")
+        .await(ready);
+
+      function ready(error, geo) {
+        if (error) throw error;
+
+        // main map
+        centerZoom(geo, width, height, projection);
+        drawSubUnits(geo, g, path);
+        drawOuterBoundary(geo, g, path);
+
+        // inset
+        centerZoom(geo, inset_width, inset_height, inset_projection);
+        drawOuterBoundary(geo, inset_g, inset_path);
+        drawInsetRect();
+
+        // set up the select dropwdown
+        var select = d3.select("select");
+        var uniques = geo.objects.polygons.geometries.map(function(d){ return d.properties[match_property]; }).sort();
+
+        console.log(uniques)
+
+        select.selectAll("option")
+            .data(uniques)
+          .enter().append("option")
+            .attr("value", function(d){ return d; })
+            .text(function(d){ return d; });
+
+        // the interval, which stops if the user selects
+        var count = 0;
+        var interval_is_on = true;
+        function intervalFn(){
+          var val = jz.num.isEven(count) ? jz.arr.random(uniques) : "-- Reset --";
+          select.property("value", val);
+          zoomTo(geo, val);  
+          ++count;
+        }
+        var interval = d3.interval(intervalFn, 2000);
+        d3.select("#stop-go").on("click", function(){
+          if (interval_is_on) {
+            interval.stop();
+            d3.select(this).text("Go");
+            interval_is_on = false;
+          } else {
+            interval = d3.interval(intervalFn, 2000);
+            d3.select(this).text("Stop");
+            interval_is_on = true;
+          }
+        });
+        select.on("change", function(){
+          interval.stop();
+          d3.select("#stop-go").text("Go");
+          interval_is_on = false;
+          zoomTo(geo, select.property("value"));  
+        });
+ 
+      }
+
+      function zoomTo(data, subunit){
+        svg.select(".subunit-boundary").moveToFront();
+        svg.selectAll(".subunit").classed("selected", false);
+
+        // zoom back out if the selection is reset
+        if (subunit == "-- Reset --"){
+          g.transition().duration(1500).attr("transform", "translate(0, 0)scale(1)");
+          inset_g.select(".inset-rect").transition().duration(1500)
+            .attr("width", inset_width)
+            .attr("height", inset_height)
+            .attr("x", 0)
+            .attr("y", 0);
+          return;
+        }
+
+        var selector = ".subunit." + jz.str.toSlugCase(subunit);
+        svg.select(selector).classed("selected", true).moveToFront();
+
+        // See: https://bl.ocks.org/mbostock/4699541
+        var bounds = path.bounds(topojson.feature(data, data.objects.polygons).features.filter(function(f){ return f.properties[match_property] == subunit; })[0]),
+          dx = bounds[1][0] - bounds[0][0],
+          dy = bounds[1][1] - bounds[0][1],
+          x = (bounds[0][0] + bounds[1][0]) / 2,
+          y = (bounds[0][1] + bounds[1][1]) / 2,
+          scale = 1 / Math.max(dx / width, dy / height),
+          translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+        g.transition().duration(1500).attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+
+        // My own math, which is kind of the same as the above but
+        // takes into account that the inset is proportionally smaller
+        // than the main map.
+        var inset_scale_width = inset_width / scale;
+        var inset_scale_height = inset_height / scale;
+
+        console.log("inset_scale_width: " + inset_width);
+
+        var co_h = inset_height / height;
+        var subunit_height = (bounds[1][1] - bounds[0][1]) * co_h;
+        var inset_dy = (inset_scale_height - subunit_height) / 2;
+        var inset_y = bounds[0][1] * co_h - inset_dy;
+
+        var co_w = inset_width / width;
+        var subunit_width = (bounds[1][0] - bounds[0][0]) * co_w;
+        var inset_dx = (inset_scale_width - subunit_width) / 2;
+        var inset_x = bounds[0][0] * co_w - inset_dx;
+
+        inset_g.select(".inset-rect").transition().duration(1500)
+          .attr("width", inset_scale_width)
+          .attr("height", inset_scale_height)
+          .attr("x", inset_x)
+          .attr("y", inset_y);
+
+      }
+
+      function centerZoom(data, width, height, this_projection) {
+        this_projection.fitSize([width, height], topojson.feature(data, data.objects.polygons));
+      }
+
+      function drawInsetRect(data){
+        inset_g.append("rect")
+          .attr("class", "inset-rect")
+          .attr("x", 0)
+          .attr("width", inset_width)
+          .attr("y", 0)
+          .attr("height", inset_height);
+      }
+
+      function drawOuterBoundary(data, parent, this_path) {
+        var boundary = topojson.mesh(data, data.objects.polygons, function(a, b) { return a === b; });
+        parent.append("path")
+          .datum(boundary)
+          .attr("d", this_path)
+          .attr("class", "subunit-boundary");
+      }
+
+      function drawSubUnits(data, parent, this_path) {
+        parent.selectAll(".subunit")
+            .data(topojson.feature(data, data.objects.polygons).features)
+          .enter().append("path")
+            .attr("class", function(d){ return "subunit " + jz.str.toSlugCase(d.properties[match_property]); })
+            .attr("d", this_path);
+      }
+    </script>
+  </body>
+</html>

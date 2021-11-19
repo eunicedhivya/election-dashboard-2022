@@ -1,0 +1,295 @@
+.dash-title{
+    text-align: center;
+    font-family: 'Georama', sans-serif;
+    font-weight: 700;
+}
+
+
+
+/* Card */
+.card {
+    border: 1px solid #ccc;
+    width: 100% !important;
+    position: relative;
+}
+.card .const_name, .card .status, .card .leadCandName, .card .trailingCandName, .card .margin{
+    font-size: 20px;
+}
+.card .const_name::before{
+    content:"Constituency ";
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    font-size: 12px;
+    color: #666;
+}
+.card .status::before{
+    content:"Status ";
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    font-size: 12px;
+    color: #666;
+}
+.card .margin::before{
+    content:"Margin ";
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    font-size: 12px;
+    color: #666;
+}
+.card .leadCandName::before{
+    content:"Leading ";
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    font-size: 12px;
+    color: #666;
+}
+.card .trailingCandName::before{
+    content:"Trailing ";
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    font-size: 12px;
+    color: #666;
+}
+
+.horstackchart, .yearwisefilters {
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.horbarchart-legend {
+    width:fit-content;
+    margin: 10px auto; 
+}
+
+div.horbarchart{
+    display: flex;
+    position: relative;
+}
+
+div.horbarchart::after{
+    content: '';
+    height: 45px;
+    width: 2px;
+    border-left: 2px dashed #000;
+    position: absolute;
+    left: 0;
+    top: -8px;
+    margin-left: 50%;
+}
+div.horbarchart .block{
+    padding: 5px 10px;
+    box-sizing: border-box;
+    height: 30px;
+    position: relative;
+    transition: all .2s;
+    /* color: #fff; */
+}
+
+
+.legend-block{
+    height: 10px;
+    width: 40px;
+    display: inline-block;
+    margin: 10px 10px;
+    text-align: center;
+    font-family: 'Georama', sans-serif;
+    
+    
+}
+
+.point{
+    font-family: 'Georama', sans-serif;
+    margin-bottom: 20px;
+}
+
+.point p{
+    color: #999;
+    text-transform: uppercase;
+    display: flex;
+    align-items: baseline;
+    column-gap: 5px;
+    margin: 0 0 0 0;
+    letter-spacing: 0.02em;
+    font-size: 12px;
+}
+.point p img{
+    width:30px;
+}
+.point:nth-child(2) p img, .point:nth-child(3) p img{
+    width:16px;
+}
+
+.point:nth-child(4) p img{
+    width:23px;
+}
+
+
+.point span{
+    font-size: 23px;
+    margin: -3px 0 0 0;
+    font-weight: 500;
+    display: block;
+}
+
+.legend-block span{
+   display: block;
+}
+
+.legend-block .partylabel{
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.cooltip-box {
+    /* The box around the cooltip text */
+    stroke: orange;
+    stroke-width: 2;
+}
+
+.cooltip-text {
+    /* The cooltip text */
+    font-size: 150%;
+}
+
+.filterBtns {
+    background-color: #b7b7b7;
+    color: #FFF;
+    padding: 0px 8px;
+    border-radius: 12px;
+    font-size: 18px;
+    outline: 0;
+    border: none;
+    font-weight: 600;
+    font-family: 'Georama', sans-serif;
+    margin-right: 10px;
+}
+.filterBtns:last-child {
+    margin-right: 0px;
+}
+
+.filterBtns.active {
+    background-color: #000;
+}
+
+/* Styling for Maps */
+
+.map path{
+    transition: all 0.2s;
+}
+.map path:hover{
+    stroke: #000000;
+    stroke-width: 5;
+}
+
+.map-tooltip{
+    opacity: 0;
+}
+
+.map path:hover .map-tooltip{
+    opacity: 1;
+}
+
+.map path.active{
+    fill: #000000;
+    stroke: #000000;
+    stroke-width: 5;
+}
+
+.map-tooltip::before{
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 7px;
+    background-color: black;
+    margin-top: 45px;
+    margin-left: -20px;
+}
+/* .map-tooltip p{
+    margin-bottom: 0;
+} */
+
+.tooltip-container{
+    font-family: 'Georama', sans-serif;
+}
+
+.tooltip-container .tooltip-header, 
+.tooltip-container .tooltip-content{
+    display: flex;
+}
+
+.tooltip-container .tooltip-header p {
+    padding: 5px 8px;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    margin: 0;
+}
+.tooltip-container .tooltip-header p:first-child {
+    background-color: red;
+    color: #fff;
+}
+.tooltip-container .tooltip-header p:last-child {
+    background-color: #A1CDCA;
+}
+
+.tooltip-container .tooltip-content {
+    background-color: #000;
+    color: #FFF;
+    padding: 10px;
+    width: fit-content;
+}
+.tooltip-container .gotoLink a{
+    background-color: #378eaa;
+    color: #FFF;
+    padding: 2px 10px;
+    font-size: 14px;
+    text-decoration: none;
+}
+.tooltip-container .tooltip-content .datapoint{
+    border-right: 1px solid #fff;
+    padding: 0 20px 0 0;
+    margin: 0 10px 0 0;
+    font-weight: 600;
+    font-size: 18px;
+}
+.tooltip-container .tooltip-content .datapoint:last-child{
+    border-right: none;
+}
+.tooltip-container .tooltip-content .datapoint p{
+    margin: 0 0 0 0;
+}
+
+.map-section{
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    /* align-items: baseline; */
+}
+.map-section .col-md-8{
+    width: 80%;
+    height: fit-content;
+}
+.map-section .col-md-4{
+    width: 20%;
+    height: fit-content;
+}
+
+.dash-intro{
+    text-align: center;
+}
+
+/* Map Inset Rectangle */
+.inset-rect {
+    stroke-width: 2px;
+    stroke: tomato;
+    fill: none;
+}

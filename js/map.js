@@ -39,7 +39,7 @@ function drawAssemblyMap(selector, settings){
         .attr("viewBox", "0 0 " + width + " " + height)
         .attr("preserveAspectRatio", "xMinYMin")
         .append("g")
-
+    
     var tool_tip = d3.tip()
         .attr("class", "map-tooltip")
         .offset([60, 154])
@@ -92,9 +92,9 @@ function drawAssemblyMap(selector, settings){
         
         // Converts and extracts topojson to map
         var stateconst = topojson.feature(stateShape, stateShape.objects.collection).features;
-        console.log(stateconst);
+        // console.log(stateconst);
 
-        svg.selectAll(".state")
+        svg.selectAll(".const")
             .data(stateconst).enter().append("path")
             .attr("d", geoPath)
             .attr("class", function(d) {
@@ -116,6 +116,59 @@ function drawAssemblyMap(selector, settings){
             })
             .on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
+            .on('click', function(d){
+
+                d3.selectAll(".const").attr('stroke', "#fff").attr('stroke-width', "0.4")
+                d3.select(".c"+d.properties.ac).attr("stroke", "black").attr('stroke-width', "5")
+
+                var groupElement2 = document.querySelector(".c"+d.properties.ac).getBBox();
+                // console.log(groupElement2)
+
+                d3.select(".inset-rect").transition().duration(500)
+                    .attr("x", groupElement2.x-2)
+                    .attr("y", groupElement2.y-2)
+                    .attr("width", groupElement2.width + 5)
+                    .attr("height", groupElement2.height + 5);
+
+                var fdMapData = stateconst.filter(function(obg){
+                    // console.log(obg.properties.ac === d.properties.ac)
+                    return obg.properties.ac === 1;                
+                })
+
+                console.log(fdMapData)
+
+                
+                var svg2 = d3.select(".constmap")
+                    .append("svg")
+                    .attr("class", "othermap")
+                    .attr("viewBox", "0 0 " + width + " " + height)
+                    .attr("preserveAspectRatio", "xMinYMin")
+                    .append("g")
+
+                var projection1 = d3.geoMercator()
+                    .scale(40000)
+                    .center([77.7, 30.22]) // latlong for Behat
+                    .translate([width / 2, height / 2])
+
+                var geoPath1 = d3.geoPath()
+                    .projection(projection1)
+
+
+                svg2.selectAll(".selectconst")
+                    .data(fdMapData).enter().append("path")
+                    .attr("d", geoPath1)
+                    .attr("class", function(d) {
+                        return "selectconst c";
+                    })
+                    .attr('stroke', "#fff")
+                    .attr('stroke-width', "0.4")
+                    .attr('fill', function(d,i){
+                        return "#fff";
+                        
+                    })
+
+                
+            })
             // .attr('data-color', function(d,i){
             //     var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
             //         return obj["constNo"] === d.properties.ac;
@@ -155,8 +208,24 @@ function drawAssemblyMap(selector, settings){
             // d3.select(".margin").html(defaultUPData[0]["margin"].toLocaleString('en-IN'))
 
             // // Select const path by default on load
-            d3.select(".c"+settings.defaultconst).attr("stroke", "red")
+            svg.append("rect")
+                .attr("class", "inset-rect")
+                .attr("x", 0)
+                .attr("width", width)
+                .attr("y", 0)
+                .attr("height", height);
+
+            d3.select(".c"+settings.defaultconst).attr("stroke", "black")
             .attr("stroke-width", "5")
+
+            var groupElement = document.querySelector(".c"+settings.defaultconst).getBBox();
+            console.log(groupElement)
+
+            d3.select(".inset-rect").transition().duration(1500)
+                .attr("x", groupElement.x-2)
+                .attr("y", groupElement.y-2)
+                .attr("width", groupElement.width + 5)
+                .attr("height", groupElement.height + 5);
 
             // ====================================
             // Create Dropdown from map source            
