@@ -1,0 +1,31 @@
+{
+    "up": [
+        {            
+            "constId": 1,
+            "constName": "Behat",
+            "loksabhaSeats": "Alipurduars",
+            "district": "Saharanpur",
+            "swingSeat": "GEN",
+            "demographics": {
+                "totalElectorate": 336569,
+                "maleVoters": "",
+                "femaleVoters": "",
+                "thirdGender": "",
+                "totalVotesPolled": 250983,
+                "votedMale": "",
+                "votedFemale": "",
+                "votedThirdGender": ""
+            },
+            "pastResults": {
+                "party2017": "INC",
+                "party2012": "",
+                "turnout2017": "",
+                "turnout2012": "",
+                "victoryMargin": 25586,
+                "victoryMargin%": 10.2
+            },
+            "allCandidates": [],
+            "allAlliances":[]
+        }
+    ]
+}

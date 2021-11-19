@@ -96,7 +96,7 @@ function drawAssemblyMap(selector, mapdata, settings){
         // var stateconst = topojson.feature(stateShape, stateShape.objects.collection).features;
         // console.log(stateconst);
 
-        svg.selectAll(".const")
+    var constituency =  svg.selectAll(".const")
             .data(mapdata).enter().append("path")
             .attr("d", geoPath)
             .attr("class", function(d) {
@@ -105,18 +105,11 @@ function drawAssemblyMap(selector, mapdata, settings){
             .attr('stroke', "#fff")
             .attr('stroke-width', "0.4")
             .attr('fill', function(d,i){
-                return "#ccc";
-                // var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-                //     return obj["constNo"] === d.properties[settings.constnokey];
-                // })
-
-                // // console.log(fdTrendData2017[0])
-
-                // // enter the filtered data in abreviation and colors object
-                // return partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]];
-                
+                return "#ccc";                
             })
-            .on('mouseover', tool_tip.show) // to enable d3tip tooltips
+            
+    
+    constituency.on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
             .on('click', function(d){
 
@@ -134,46 +127,6 @@ function drawAssemblyMap(selector, mapdata, settings){
 
                 
             })
-            // .attr('data-color', function(d,i){
-            //     var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-            //         return obj["constNo"] === d.properties[settings.constnokey];
-            //     })
-
-            //     // console.log(fdTrendData2017[0])
-
-            //     // enter the filtered data in abreviation and colors object
-            //     return partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]];
-                
-            // })
-            
-            // .on('click', function(d,i){
-                
-                
-            //     d3.selectAll(".const").attr("stroke", "#ccc").attr("stroke-width", "0.2")
-
-            //     d3.select(".c"+d.properties[settings.constnokey]).attr("stroke", "black").attr("stroke-width", "5")
-
-            //     $('#const-list').val(d.properties[settings.constnokey]).trigger('change')
-
-
-            //     filterNDisplay2017(d.properties[settings.constnokey]);
-
-                
-            // })
-
-            // // filter const data by default on load
-            // var defaultUPData = constwisetrenddata2017.filter(function(obj){
-            //     return obj["constNo"] === settings.defaultconst;
-            // })
-
-            // d3.select(".const_name").html(defaultUPData[0]["constituency"])
-            // d3.select(".status").html(defaultUPData[0]["status"])
-            // d3.select(".leadCandName").html(defaultUPData[0]["leadingCandidate"] + " <span>("+party_abrev[defaultUPData[0]["leadingParty"]]+")</span>")
-            // d3.select(".trailingCandName").html(defaultUPData[0]["trailingCandidate"] + " <span>("+party_abrev[defaultUPData[0]["trailingParty"]]+")</span>")
-            // d3.select(".margin").html(defaultUPData[0]["margin"].toLocaleString('en-IN'))
-
-            // // Select const path by default on load
-            
 
             d3.select(".c"+settings.defaultconst).attr("stroke", "black")
             .attr("stroke-width", "5")
