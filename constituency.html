@@ -8,11 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
     <style>
         svg{
-            background-color: #ccc;
+            /* background-color: #ccc; */
+            width: 100%;
+        }
+        .past-results{
+            width: 100%;
         }
     </style>
 </head>
@@ -29,16 +33,14 @@
                 </div>
             </div>
             <div class="row">
-               <nav class="yearwisefilters">
-                <button class="filterBtns active" id="year2012">2012</button>
-                <button class="filterBtns" id="year2017">2017</button>
-                <button class="filterBtns" id="year2022">2022</button>
+               <nav class="about-constituency">
+                <ul>
+                    <li>Const No: <span>11</span></li>
+                    <li>Lok Sabha Seat: <span>Alipurduars</span></li>
+                    <li>District<span>Alipurduars</span></li>
+                    <li>Swing Seat: <span>11</span></li>
+                </ul>
                </nav>
-            </div>
-            <div class="row">
-                <div id="seatshare2017" class="horstackchart">
-                        
-                </div>
             </div>
             <div class="map-section row">
                 <div class="col-md-4">
@@ -47,7 +49,7 @@
                     </div>
                     <div class="const-filter">
                         <p>Select Constituency
-                            <Select id="const-list" onchange="displayConstituency()"> 
+                            <Select id="const-list"> 
                                 <option value="#">Select Constituency</option>
                             </Select>
                         </p>
@@ -60,30 +62,40 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <div class="point" id="totelectorate">
-                                <p> <img src="assets/img/tot-electorate.png" alt=""> Total Electorate</p>
-                                <span>2,74,46,039</span>
-                            </div>
-                            <div class="point" id="totelectorate">
-                                <p><img src="assets/img/male-voters.png" alt=""> Male Voters</p>
-                                <span>1,32,83,724</span>
-                            </div>
-                            <div class="point" id="totelectorate">
-                                <p><img src="assets/img/female-voters.png" alt=""> Female Voters</p>
-                                <span>1,41,83,724</span>
-                            </div>
-                            <div class="point" id="totelectorate">
-                                <p><img src="assets/img/voter-turnout.png" alt=""> Voter Turnout</p>
-                                <span>2,74,46,039</span>
-                            </div>
-                        </div>
-                        <div id="map-table" class="table">
-                            
-                        </div>
-                        </div>
-                      </div>
+                    <div class="consttable">
+                        
+                        <table class="past-results">
+                            <thead>
+                                <th>Past Results</th>
+                                <th>2016</th>
+                                <th>2011</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Winner</td>
+                                    <td>TMC</td>
+                                    <td>IND</td>
+                                </tr>
+                                <tr>
+                                    <td>Turnout %</td>
+                                    <td>81.45%</td>
+                                    <td>84.74%</td>
+                                </tr>
+                                <tr>
+                                    <td>Margin of Victory</td>
+                                    <td>1,511</td>
+                                    <td>7,245</td>
+                                </tr>
+                                <tr>
+                                    <td>Margin of Victory %</td>
+                                    <td>0.85%</td>
+                                    <td>4.69%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
                     
                 </div>
             </div>
@@ -93,8 +105,7 @@
     <script src="js/d3.v4.min.js"></script>
     <script src="js/topojson.v2.min.js"></script>
     <script src="js/d3-tip.js"></script> <!--used with topojson map-->
-    <script src="js/horstackchart.js"></script>
-    <script src="js/map.js"></script>
+    <script src="js/map-function.js"></script>
     <script>
         var assemplyconstmap_up = (function() {
             assemplyconstmap_up = null;
@@ -112,7 +123,7 @@
             return assemplyconstmap_up;
         })();
 
-        console.log(assemplyconstmap_up)
+        // console.log(assemplyconstmap_up)
         
         var constwisetrenddata2017 = (function() {
             constwisetrenddata2017 = null;
@@ -128,6 +139,39 @@
             });
             return constwisetrenddata2017;
         })();
+
+        
+        drawAssemblyMap(".map", assemplyconstmap_up, {
+            type: 'state', // Statecode for map
+            statecode: 'U07', // Statecode for map
+            vhcode: 'up', // state vehicle code
+            defaultconst: 175, // state vehicle code
+            constnokey: 'ac', // add map topojson
+            constnamekey: 'ac_name', // add map topojson
+            scale: 2500, // size adjust until it sits well
+            center: [80.9462, 27.2], // enter lat long from google of UP
+            inset: true
+        })
+
+        var getBehat = assemplyconstmap_up.filter(function(object){
+            return object.properties.ac === 1;
+        })
+
+        console.log(getBehat)
+
+        drawAssemblyMap(".constmap", getBehat, {
+            type: 'const', // Statecode for map
+            statecode: 'U07', // Statecode for map
+            vhcode: 'up', // state vehicle code
+            defaultconst: 175, // state vehicle code
+            constnokey: 'ac', // add map topojson
+            constnamekey: 'ac_name', // add map topojson
+            scale: 40000, // size adjust until it sits well
+            center: [77.7, 30.22], // enter lat long from google of UP
+            inset: false
+        })
+
+        
 
     
 
