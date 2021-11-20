@@ -24,6 +24,11 @@
                 "victoryMargin": 25586,
                 "victoryMargin%": 10.2
             },
+            "allYears": {
+                "party2022": "",
+                "party2017": "INC",
+                "party2012": ""
+            },
             "allCandidates": [],
             "allAlliances":[]
         }
