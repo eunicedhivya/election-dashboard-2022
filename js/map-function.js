@@ -114,7 +114,7 @@ function drawAssemblyMap(selector, mapdata, settings){
             .on('click', function(d){
 
                 d3.selectAll(".const").attr('stroke', "#fff").attr('stroke-width', "0.4")
-                d3.select(".c"+d.properties[settings.constnokey]).attr("stroke", "black").attr('stroke-width', "5")
+                d3.select(".c"+d.properties[settings.constnokey]).attr("stroke", "#ff2020").attr('stroke-width', "5")
 
                 var groupElement2 = document.querySelector(".c"+d.properties[settings.constnokey]).getBBox();
                 // console.log(groupElement2)
@@ -130,7 +130,7 @@ function drawAssemblyMap(selector, mapdata, settings){
     } // end of settings.enableEvents if true
     
 
-            d3.select(".c"+settings.defaultconst).attr("stroke", "black")
+            d3.select(".c"+settings.defaultconst).attr("stroke", "#ff2020")
             .attr("stroke-width", "5")
 
             // create Inset if True
