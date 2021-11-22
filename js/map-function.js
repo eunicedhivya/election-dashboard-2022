@@ -108,8 +108,8 @@ function drawAssemblyMap(selector, mapdata, settings){
                 return "#ccc";                
             })
             
-    
-    constituency.on('mouseover', tool_tip.show) // to enable d3tip tooltips
+    if(settings.enableEvents !== false){
+        constituency.on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
             .on('click', function(d){
 
@@ -127,6 +127,8 @@ function drawAssemblyMap(selector, mapdata, settings){
 
                 
             })
+    } // end of settings.enableEvents if true
+    
 
             d3.select(".c"+settings.defaultconst).attr("stroke", "black")
             .attr("stroke-width", "5")
@@ -140,16 +142,18 @@ function drawAssemblyMap(selector, mapdata, settings){
                 .attr("x", 0)
                 .attr("width", width)
                 .attr("y", 0)
-                .attr("height", height);
+                .attr("height", height)
+                .attr("stroke-opacity", 0);
                 
                 var groupElement = document.querySelector(".c"+settings.defaultconst).getBBox();
                 // console.log(groupElement)
 
                 d3.select(".inset-rect").transition().duration(1500)
-                    .attr("x", groupElement.x-2)
-                    .attr("y", groupElement.y-2)
-                    .attr("width", groupElement.width + 5)
-                    .attr("height", groupElement.height + 5);
+                    .attr("x", groupElement.x-4)
+                    .attr("y", groupElement.y-4)
+                    .attr("width", groupElement.width + 10)
+                    .attr("height", groupElement.height + 10)
+                    .attr("stroke-opacity", 1);
             }
 
             // ====================================
