@@ -29,8 +29,121 @@
                 "party2017": "INC",
                 "party2012": ""
             },
-            "allCandidates": [],
-            "allAlliances":[]
+            "allAlliances": [],
+            "allCandidates":[
+                {
+                  "constId": 1,
+                  "candName": "NARESH SAINI",
+                  "party": "INC",
+                  "votes": "97035",
+                  "votes%": "38.66198109",
+                  "status": "won"
+                },
+                {
+                  "constId": 1,
+                  "candName": "MAHAVEER SINGH RANA",
+                  "party": "BJP",
+                  "votes": "71449",
+                  "votes%": "28.46766514",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "MOHD. IQBAL",
+                  "party": "BSP",
+                  "votes": "71019",
+                  "votes%": "28.2963388",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "RANA ADITYA PRATAP SINGH",
+                  "party": "IND",
+                  "votes": "4187",
+                  "votes%": "1.668240478",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "None of the Above",
+                  "party": "NOTA",
+                  "votes": "1576",
+                  "votes%": "0.627930975",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "KAMRAN ALI",
+                  "party": "BHASP",
+                  "votes": "1255",
+                  "votes%": "0.500033867",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "ARUN",
+                  "party": "RLD",
+                  "votes": "1150",
+                  "votes%": "0.458198364",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "HARDHYAN",
+                  "party": "IND",
+                  "votes": "1113",
+                  "votes%": "0.44345633",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "GOPAL SINGH",
+                  "party": "IND",
+                  "votes": "945",
+                  "votes%": "0.376519525",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "KRISHNA KUMAR",
+                  "party": "IND",
+                  "votes": "810",
+                  "votes%": "0.322731022",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "KALYAN SINGH",
+                  "party": "IND",
+                  "votes": "659",
+                  "votes%": "0.262567584",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "LOKESH VERMA",
+                  "party": "BHATARSP",
+                  "votes": "617",
+                  "votes%": "0.245833383",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "SAKEEM KHAN",
+                  "party": "BMUP",
+                  "votes": "425",
+                  "votes%": "0.169334178",
+                  "status": "lost"
+                },
+                {
+                  "constId": 1,
+                  "candName": "KARM SINGH",
+                  "party": "IND",
+                  "votes": "319",
+                  "votes%": "0.127100242",
+                  "status": "lost"
+                }
+              ]
         }
     ]
 }
