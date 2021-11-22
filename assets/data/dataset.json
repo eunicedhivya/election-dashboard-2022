@@ -1,5 +1,10 @@
 {
-    "up": [
+    "up": {
+      "allAlliances": [
+        "BJP + Apna Dal (Sonelal) + NISHAD Party",
+        "Samajwadi Party (SP) + Rashtriya Lok Dal (RLD) + Suheldev Bharatiya Samaj Party (SBSP) + Mahan Dal + Janvadi Party (Socialist)"
+      ],
+      "constituencydata": [
         {            
             "constId": 1,
             "constName": "Behat",
@@ -8,28 +13,27 @@
             "swingSeat": "GEN",
             "demographics": {
                 "totalElectorate": 336569,
-                "maleVoters": "",
-                "femaleVoters": "",
-                "thirdGender": "",
+                "maleVoters": 13283724,
+                "femaleVoters": 13283724,
+                "thirdGender": 13283724,
                 "totalVotesPolled": 250983,
-                "votedMale": "",
-                "votedFemale": "",
-                "votedThirdGender": ""
+                "votedMale": 13283724,
+                "votedFemale": 13283724,
+                "votedThirdGender": 13283724
             },
             "pastResults": {
                 "party2017": "INC",
-                "party2012": "",
-                "turnout2017": "",
-                "turnout2012": "",
+                "party2012": "BSP",
+                "turnout2017": 13283724,
+                "turnout2012": 13283724,
                 "victoryMargin": 25586,
                 "victoryMargin%": 10.2
             },
             "allYears": {
-                "party2022": "",
+                "party2022": "NA",
                 "party2017": "INC",
-                "party2012": ""
+                "party2012": "BSP"
             },
-            "allAlliances": [],
             "allCandidates":[
                 {
                   "constId": 1,
@@ -146,4 +150,5 @@
               ]
         }
     ]
+    }
 }
