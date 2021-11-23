@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://www.news9live.com/styles/themetvfile.min.e5df8239.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="css/style.css">
@@ -23,39 +24,39 @@
 <body>
     <div class="tv9-dashboard">
         <section class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="dash-intro">
-
-                        <h1 class="dash-title" id="Constituency-name">Pragyaraj</h1>
-                        <p>The Taliban are reported to have raised their flag above a key border post between Afghanistan and Pakistan, and claim it is now under their control.</p>
-                    </div>
-                </div>
+            <div class="dash-intro">
+                <h1 class="dash-title" id="Constituency-name">Behat</h1>
+                <p>The Taliban are reported to have raised their flag above a key border post between Afghanistan and Pakistan, and claim it is now under their control.</p>
             </div>
             <div class="row">
                <nav class="about-constituency">
                 </nav>
             </div>
-            <div class="map-section row">
-                <div class="col-md-4">
-                    <div class="map">
-            
+        </section>
+        <section class="container">
+            <div class="row" id="map-content">
+                <div class="map-section col">
+                    <div class="sub-col">
+                        <div class="map">
+                
+                        </div>
+                    </div> <!-- end of col -->
+
+                    <div class="sub-col curly">
+                        <img src="assets/img/curly.png" alt="">
                     </div>
-                    <div class="const-filter">
-                        <p>Select Constituency
-                            <Select id="const-list"> 
-                                <option value="#">Select Constituency</option>
-                            </Select>
-                        </p>
-                        
+
+                    <div class="sub-col">
+                        <div class="constmap">
+                
+                        </div>
+                    </div> <!-- end of col -->
+
+                    <div class="sub-col curly display-desktop-only">
+                        <img src="assets/img/curly.png" alt="">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="constmap">
-            
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col">
                     <ul class="aboutconst">
                         <li>Const No: <span id="constno"></span></li>
                         <li>Lok Sabha Seat: <span id="loksabhaseat"></span></li>
@@ -63,8 +64,101 @@
                         <li>Swing Seat: <span id="swingseat"></span></li>
                     </ul>
                 </div>
-                    
+            </div>
+        </section>
+        <section class="container">
+            <div class="two-cols">
+                <div class="points">
+                    <div class="point">
+                        <img src="assets/img/tot-electorate.png" alt="">
+                        <div class="pointcontent">
+                            <p>Total Voters</p>
+                            <span id="totalVoters"></span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <p>Total Votes Polled</p>
+                        <span id="totVotesPolled"></span>
+                    </div>
                 </div>
+                <div class="points">
+                    <div class="point">
+                        <img src="assets/img/male-voters.png" alt="">
+                        <div class="pointcontent">
+                            <p>Male Voters</p>
+                            <span id="maleVoters"></span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <p>Total Votes <small>(2017)</small></p>
+                        <span id="totMaleVotes"></span>
+                    </div>
+                </div>
+                <div class="points">
+                    <div class="point">
+                        <img src="assets/img/female-voters.png" alt="">
+                        <div class="pointcontent">
+                            <p>Female Voters</p>
+                            <span id="femaleVoters"></span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <p>Total Votes <small>(2017)</small></p>
+                        <span id="totFemaleVotes"></span>
+                    </div>
+                </div>
+                <div class="points">
+                    <div class="point">
+                        <img src="assets/img/female-voters.png" alt="">
+                        <div class="pointcontent">
+                            <p>Third Gender</p>
+                            <span id="thirdGender"></span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <p>Total Votes <small>(2017)</small></p>
+                        <span id="totThirdGenVotes"></span>
+                    </div>
+                </div>
+                <div class="table">
+                    <table class="past-results">
+                        <thead>
+                            <tr>
+                                <th>Past Results</th>
+                                <th>2012</th>
+                                <th>2017</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Winner</td>
+                                <td id="winner2012">2012</td>
+                                <td id="winner2017">2017</td>
+                            </tr>
+                            <tr>
+                                <td>Turnout %</td>
+                                <td id="turnout2012">2012</td>
+                                <td id="turnout2017">2017</td>
+                            </tr>
+                            <tr>
+                                <td>Margin of Victory</td>
+                                <td id="marginVictory2012">2012</td>
+                                <td id="marginVictory2017">2017</td>
+                            </tr>
+                            <tr>
+                                <td>Margin of Victory %</td>
+                                <td id="marginVictoryPer2012">2012</td>
+                                <td id="marginVictoryPer2017">2017</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <h2>Assembly election results</h2>
+            <div class="allcandresult">
+
             </div>
         </section>
     </div>
@@ -72,9 +166,11 @@
     <script src="js/d3.v4.min.js"></script>
     <script src="js/topojson.v2.min.js"></script>
     <script src="js/d3-tip.js"></script> <!--used with topojson map-->
+    <script src="js/functions.js"></script> <!--used with topojson map-->
     <script src="js/map-function.js"></script>
     <script src="js/accordion-table.js"></script>
     <script>
+        // import topojson map
         var assemplyconstmap_up = (function() {
             assemplyconstmap_up = null;
             jQuery.ajax({
@@ -84,14 +180,16 @@
                 'cache': false,
                 'url': 'assets/maps/UP.json',
                 'success': function(stateShape) {
-                    assemplyconstmap_up = topojson.feature(stateShape, stateShape.objects.collection).features;;
+                    assemplyconstmap_up = topojson.feature(stateShape, stateShape.objects.collection).features;
                     
                 }
             });
             return assemplyconstmap_up;
         })();
 
-        // console.log(assemplyconstmap_up)
+        var assemplyconstmap_up;
+
+        // console.log("assemplyconstmap_up", assemplyconstmap_up["constituencydata"])
         
         var constwisetrenddata2017 = (function() {
             constwisetrenddata2017 = null;
@@ -100,7 +198,7 @@
                 'global': false,
                 'dataType': 'json',
                 'cache': false,
-                'url': 'assets/data/up-constituency-trend-2017.json',
+                'url': 'assets/data/dataset.json',
                 'success': function(data) {
                     constwisetrenddata2017 = data;
                 }
@@ -108,41 +206,86 @@
             return constwisetrenddata2017;
         })();
 
+        var getBehat = assemplyconstmap_up.filter(function (object) {
+            return object.properties.ac === 1;
+        })
+
         
         drawAssemblyMap(".map", assemplyconstmap_up, {
             type: 'state', // Statecode for map
             statecode: 'U07', // Statecode for map
             vhcode: 'up', // state vehicle code
-            defaultconst: 175, // state vehicle code
+            defaultconst: 1, // state vehicle code
             constnokey: 'ac', // add map topojson
             constnamekey: 'ac_name', // add map topojson
             scale: 2500, // size adjust until it sits well
             center: [80.9462, 27.2], // enter lat long from google of UP
-            inset: true
+            inset: true,
+            enableEvents: false
         })
 
-        var getBehat = assemplyconstmap_up.filter(function(object){
-            return object.properties.ac === 1;
-        })
+        
 
         console.log(getBehat)
+        console.log(constwisetrenddata2017['up'][0])
+
+        
 
         drawAssemblyMap(".constmap", getBehat, {
             type: 'const', // Statecode for map
             statecode: 'U07', // Statecode for map
             vhcode: 'up', // state vehicle code
-            defaultconst: 175, // state vehicle code
+            defaultconst: 1, // state vehicle code
             constnokey: 'ac', // add map topojson
             constnamekey: 'ac_name', // add map topojson
             scale: 40000, // size adjust until it sits well
             center: [77.7, 30.22], // enter lat long from google of UP
-            inset: false
+            inset: false,
+            enableEvents: false
         })
 
+        // About Constituency
+        document.getElementById("constno").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].constId;
+        document.getElementById("loksabhaseat").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].loksabhaSeats;
+        document.getElementById("district").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].district;
+        document.getElementById("swingseat").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].swingSeat;
+
+        // About Demographics
+        var demographicData = constwisetrenddata2017['up']["constituencydata"][0]["demographics"]
+        document.getElementById("totalVoters").innerHTML = formatNumberInd(demographicData.totalElectorate);
+        document.getElementById("maleVoters").innerHTML = formatNumberInd(demographicData.maleVoters);
+        document.getElementById("femaleVoters").innerHTML = formatNumberInd(demographicData.femaleVoters);
+        document.getElementById("thirdGender").innerHTML = formatNumberInd(demographicData.thirdGender)  ;      
+        document.getElementById("totVotesPolled").innerHTML = formatNumberInd(demographicData.totalVotesPolled);
+        document.getElementById("totMaleVotes").innerHTML = formatNumberInd(demographicData.votedMale);
+        document.getElementById("totFemaleVotes").innerHTML = formatNumberInd(demographicData.votedFemale);
+        document.getElementById("totThirdGenVotes").innerHTML = formatNumberInd(demographicData.votedThirdGender);
+
+        // Past results table
+        // drawAccTable(tabledata, ".past-results", ["Party", "Won", "Leading", "Total"])
+
+        var pastResultsData = constwisetrenddata2017['up']["constituencydata"][0]["pastResults"];
+
+        document.getElementById("winner2012").innerHTML = pastResultsData.winner2012
+        document.getElementById("winner2017").innerHTML = pastResultsData.winner2017
+        document.getElementById("turnout2012").innerHTML = formatNumberInd(pastResultsData.turnout2012)
+        document.getElementById("turnout2017").innerHTML = formatNumberInd(pastResultsData.turnout2017)
+        document.getElementById("marginVictory2012").innerHTML = formatNumberInd(pastResultsData.victoryMargin2012)
+        document.getElementById("marginVictory2017").innerHTML = formatNumberInd(pastResultsData.victoryMargin2017)
+        document.getElementById("marginVictoryPer2012").innerHTML = formatNumberPer(pastResultsData['victoryMargin%2012'])
+        document.getElementById("marginVictoryPer2017").innerHTML = formatNumberPer(pastResultsData['victoryMargin%2017'])
         
+        // Candidatewise results
+        var candidatewiseResultsData = constwisetrenddata2017['up']["constituencydata"][0]["allCandidates"];
 
-    
+        // ["party", "votes", "votes%", "candName", "status"]
 
+        drawAccTable( candidatewiseResultsData,  ".allcandresult",   ["candName", "party", "votes", "votes%", "status"], {
+            "party": "Party", "votes": "votes", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost"
+        })
+        
+                
+        
     </script>
 </body>
 </html>

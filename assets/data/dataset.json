@@ -22,12 +22,14 @@
                 "votedThirdGender": 13283724
             },
             "pastResults": {
-                "party2017": "INC",
-                "party2012": "BSP",
+                "winner2017": "INC",
+                "winner2012": "BSP",
                 "turnout2017": 13283724,
                 "turnout2012": 13283724,
-                "victoryMargin": 25586,
-                "victoryMargin%": 10.2
+                "victoryMargin2012": 25586,
+                "victoryMargin%2012": 10.2,
+                "victoryMargin2017": 25586,
+                "victoryMargin%2017": 10.2
             },
             "allYears": {
                 "party2022": "NA",
@@ -147,7 +149,20 @@
                   "votes%": "0.127100242",
                   "status": "lost"
                 }
-              ]
+            ],
+            "text": {
+              "Introduction": "",
+              "Demographic Profile": "",
+              "Past Winners (Candidates and Parties)": "",
+              "Candidates in 2012 and 2017": "",
+              "NOTA (None of the Above)": "",
+              "Voter Turnout": "",
+              "Voter Turnout": "",
+              "Voter Turnout": "",
+              "Voter Turnout": "",
+              "Voter Turnout": ""
+
+            }
         }
     ]
     }

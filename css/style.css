@@ -1,5 +1,7 @@
 .tv9-dashboard {
   font-family: "Georama", sans-serif;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 .tv9-dashboard .container {
   width: 100%;
@@ -16,13 +18,16 @@
 
 .map-section {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 48% 4% 48%;
   column-gap: 20px;
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
-.map-section .sub-col::after {
-  content: "{";
+/* .map-section .sub-col::after {
+  content: "";
+  background-image: url("assets/img/curly.svg");
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -30,6 +35,10 @@
   font-size: 58px;
   margin-right: -4%;
   color: #ababab;
+} */
+
+.curly img {
+  width: 25px;
 }
 
 .aboutconst {
@@ -43,4 +52,287 @@
 }
 .aboutconst li span {
   font-weight: 700;
+}
+
+/* Map Section ====================================== */
+
+.constmap path {
+  fill: #ff2020;
+}
+
+/* Map Inset Rectangle */
+.inset-rect {
+  stroke-width: 5px;
+  stroke: #ff2020;
+  fill: none;
+}
+
+.two-cols {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: 20px;
+}
+.points .point {
+  border-top: 5px solid #ccc;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: start;
+  box-sizing: border-box;
+}
+.points .point:nth-child(2) {
+  flex-direction: column;
+  background-color: #ccc;
+  border-radius: 10px;
+  padding: 5px 10px 10px 10px;
+  text-align: left;
+}
+.points .point:nth-child(2) p {
+  font-size: 15px;
+  text-transform: capitalize;
+  color: #000;
+  font-weight: 600;
+}
+.points .point:nth-child(2) p small {
+  font-size: 12px;
+}
+.points .pointcontent {
+  font-weight: 700;
+  text-align: left;
+}
+.points p {
+  text-transform: uppercase;
+  color: #ff2020;
+  line-height: 20px;
+  margin: 0;
+  font-size: 14px;
+}
+.points img {
+  width: 30px;
+  margin-right: 10px;
+}
+.points:nth-child(2) img,
+.points:nth-child(3) img,
+.points:nth-child(4) img {
+  width: 18px;
+}
+
+.table table {
+  width: 100%;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.past-results {
+  margin-top: -5px;
+}
+.past-results thead th {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ff2020;
+  line-height: 20px;
+  margin: 0;
+  font-size: 15px;
+}
+.past-results tbody td {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.display-desktop-only {
+  display: none;
+}
+
+#map-content {
+  margin-bottom: 20px;
+}
+
+.allcandresult table {
+  width: 100%;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.allcandresult .partyRow:nth-child(1) {
+  background-color: #e5f8dc;
+  font-style: italic;
+}
+
+.allcandresult table tbody tr td,
+.allcandresult table thead tr th {
+  padding: 10px 15px 10px 20px;
+}
+
+.allcandresult table thead tr th {
+  font-size: 16px;
+}
+
+.allcandresult table tbody tr td {
+  font-size: 14px;
+  position: relative;
+}
+
+.allcandresult table thead tr {
+  background-color: #979797;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+@media (max-width: 480px) {
+  /* smartphones, Android phones, landscape iPhone */
+  .allcandresult table thead {
+    display: none;
+  }
+
+  .past-results table td:first-child,
+  .past-results table th:first-child {
+    width: 50%;
+    text-align: left;
+  }
+  .past-results table td:nth-child(2),
+  .past-results table th:nth-child(2),
+  .past-results table td:nth-child(3),
+  .past-results table th:nth-child(3) {
+    width: 25%;
+    text-align: left;
+  }
+
+  .allcandresult table tbody,
+  .allcandresult table tr,
+  .allcandresult table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+  }
+
+  .allcandresult table td {
+    border-bottom: 1px solid #ccc;
+  }
+  .allcandresult table td:first-child {
+    border-top: 2px solid #000;
+  }
+  .allcandresult table td:last-child {
+    border-bottom: none;
+  }
+
+  /* .allcandresult table tbody tr {
+    margin-bottom: 20px;
+  } */
+
+  .allcandresult table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: left;
+  }
+
+  .allcandresult table tbody tr td.stateRow::after {
+    content: "+";
+    position: absolute;
+    left: 7px;
+    font-size: 18px;
+    line-height: 1;
+    font-style: normal;
+  }
+  .allcandresult table tbody tr td.active::after {
+    content: "-";
+  }
+}
+@media (min-width: 600px) {
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+}
+@media (min-width: 768px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .allcandresult table td:first-child {
+    width: 40%;
+  }
+  .allcandresult table td:nth-child(2),
+  .allcandresult table td:nth-child(3) {
+    width: 30%;
+  }
+  .allcandresult table tbody tr {
+    border-bottom: 1px dotted black;
+  }
+}
+@media (min-width: 1025px) {
+  /* big landscape tablets, laptops, and desktops */
+  .inset-rect {
+    stroke-width: 2px;
+  }
+
+  .display-desktop-only {
+    display: block;
+  }
+
+  .map-section {
+    display: grid;
+    grid-template-columns: 46% 4% 46% 4%;
+  }
+
+  #map-content {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    align-items: center;
+  }
+
+  .map-section .sub-col::after {
+    font-size: 100px;
+    margin-right: -10px;
+  }
+
+  .two-cols {
+    display: grid;
+    grid-template-columns: 16% 14% 14% 14% 42%;
+    column-gap: 20px;
+  }
+  .two-cols .points {
+    flex: 1;
+  }
+  .two-cols .table {
+    width: 82%;
+  }
+
+  .aboutconst {
+    margin-left: 15%;
+  }
+
+  .allcandresult table td:nth-child(1),
+  .allcandresult table th:nth-child(1) {
+    width: 20%;
+  }
+  .allcandresult table td:nth-child(2),
+  .allcandresult table td:nth-child(3),
+  .allcandresult table th:nth-child(2),
+  .allcandresult table th:nth-child(3) {
+    width: 10%;
+  }
+  .allcandresult table td:nth-child(4),
+  .allcandresult table th:nth-child(4) {
+    width: 50%;
+  }
+  .allcandresult table td:nth-child(5),
+  .allcandresult table th:nth-child(5) {
+    width: 10%;
+  }
+  .stateRow {
+    pointer-events: none;
+  }
+}
+@media (min-width: 1281px) {
+  /* hi-res laptops and desktops */
 }
