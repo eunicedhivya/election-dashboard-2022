@@ -26,7 +26,7 @@
         <section class="container">
             <div class="dash-intro">
                 <h1 class="dash-title" id="Constituency-name">Behat</h1>
-                <p>The Taliban are reported to have raised their flag above a key border post between Afghanistan and Pakistan, and claim it is now under their control.</p>
+                <p id="const-intro">The Taliban are reported to have raised their flag above a key border post between Afghanistan and Pakistan, and claim it is now under their control.</p>
             </div>
             <div class="row">
                <nav class="about-constituency">
@@ -161,6 +161,29 @@
 
             </div>
         </section>
+        <section class="container">
+            <h2>Constituency Profile</h2>
+            <div class="const-profile-content">
+                <h3>Demographic Profile</h3>
+                <div id="demographic-profile"></div>
+                <h3>Past Winners (Candidates and Parties)</h3>
+                <div id="past-winners"></div>
+                <h3>Candidates in 2012 and 2017</h3>
+                <div id="candin2012n2013"></div>
+                <h3>NOTA (None of the Above)</h3>
+                <div id="nota"></div>
+                <h3>Voter Turnout</h3>
+                <div id="voterturnout"></div>
+                <h3>Poll Dates</h3>
+                <div id="polldates"></div>
+                <h3>Result Dates</h3>
+                <div id="resultdates"></div>
+                <h3>Number of Polling Stations</h3>
+                <div id="nopollingstations"></div>
+                <h3>Lok Sabha elections 2014 and 2019</h3>
+                <div id="loksabha2014n2019"></div>
+            </div>
+        </section>
     </div>
     <script src="js/jquery-1.12.4.js"></script>
     <script src="js/d3.v4.min.js"></script>
@@ -283,7 +306,32 @@
         drawAccTable( candidatewiseResultsData,  ".allcandresult",   ["candName", "party", "votes", "votes%", "status"], {
             "party": "Party", "votes": "votes", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost"
         })
+
+        // "Introduction": "",
+        //         "Demographic Profile": "",
+        //             "Past Winners (Candidates and Parties)": "",
+        //                 "Candidates in 2012 and 2017": "",
+        //                     "NOTA (None of the Above)": "",
+        //                         "Voter Turnout": "",
+        //                             "Poll Dates": "",
+        //                                 "Result Dates": "",
+        //                                     "Number of Polling Stations": "",
+        //                                         "Lok Sabha elections 2014 and 2019": ""
         
+                
+        var textData = constwisetrenddata2017['up']["constituencydata"][0]["text"]
+        // console.log(textData["Introduction"]);
+        document.getElementById('const-intro').innerHTML = textData["Introduction"]
+        // document.getElementById('const-profile-content').innerHTML = "Hello World"
+        document.getElementById("demographic-profile").innerHTML = textData["Demographic Profile"]
+        document.getElementById("past-winners").innerHTML = textData["Past Winners (Candidates and Parties)"]
+        document.getElementById("candin2012n2013").innerHTML = textData["Candidates in 2012 and 2017"]
+        document.getElementById("nota").innerHTML = textData["NOTA (None of the Above)"]
+        document.getElementById("voterturnout").innerHTML = textData["Voter Turnout"]
+        document.getElementById("polldates").innerHTML = textData["Poll Dates"]
+        document.getElementById("resultdates").innerHTML = textData["Result Dates"]
+        document.getElementById("nopollingstations").innerHTML = textData["Number of Polling Stations"]
+        document.getElementById("loksabha2014n2019").innerHTML = textData["Lok Sabha elections 2014 and 2019"]
                 
         
     </script>
