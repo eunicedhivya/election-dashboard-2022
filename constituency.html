@@ -7,25 +7,31 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://www.news9live.com/styles/themetvfile.min.e5df8239.css" rel="stylesheet">
+    <!-- <link href="https://www.news9live.com/styles/themetvfile.min.e5df8239.css" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="css/style.css">
     <style>
-        svg{
-            /* background-color: #ccc; */
-            width: 100%;
-        }
-        .past-results{
-            width: 100%;
-        }
+       
     </style>
 </head>
-<body>
+        
+        <body>
     <div class="tv9-dashboard">
         <section class="container">
+            <nav class="main-dash-nav">
+                <form autocomplete="off">
+                    <span style="font-weight: 400;">
+                        <input class="constituency-dropbtn" type="text" name="q" id="q" value="change constiuency" onKeyUp="showResults(this.value)" />
+                    </span>
+                    <div id="result"></div>
+                </form>
+            </nav>
+            <div class="breadcrumb">
+                <a href="#">Pollpedia</a> | <a href="#">Infocus</a>
+            </div>
             <div class="dash-intro">
-                <h1 class="dash-title" id="Constituency-name">Behat</h1>
+                <h1 class="const-title" id="constituency-name">Behat</h1>
                 <p id="const-intro">The Taliban are reported to have raised their flag above a key border post between Afghanistan and Pakistan, and claim it is now under their control.</p>
             </div>
             <div class="row">
@@ -156,15 +162,15 @@
             </div>
         </section>
         <section class="container">
-            <h2>Assembly election results</h2>
+            <h2 class="subhead color-orange">Assembly election results</h2>
             <div class="allcandresult">
 
             </div>
         </section>
         <section class="container">
-            <h2>Constituency Profile</h2>
+            <h2 class="subhead color-orange">Constituency Profile</h2>
             <div class="const-profile-content">
-                <h3>Demographic Profile</h3>
+                <h3 class="profile-subhead">Demographic Profile</h3>
                 <div id="demographic-profile"></div>
                 <h3>Past Winners (Candidates and Parties)</h3>
                 <div id="past-winners"></div>
@@ -193,6 +199,12 @@
     <script src="js/map-function.js"></script>
     <script src="js/accordion-table.js"></script>
     <script>
+        // Chosen State and Constituency
+        var chosenState = "up";
+        var chosenConst = 1;
+
+            
+
         // import topojson map
         var assemplyconstmap_up = (function() {
             assemplyconstmap_up = null;
@@ -208,11 +220,12 @@
                 }
             });
             return assemplyconstmap_up;
-        })();
+        })();        
 
-        var assemplyconstmap_up;
-
-        // console.log("assemplyconstmap_up", assemplyconstmap_up["constituencydata"])
+        // document.getElementById("change-const-page").addEventListener("change", function() {
+        //     // chosenState = this.value;
+        //     // chosenConst = 3;
+        // });
         
         var constwisetrenddata2017 = (function() {
             constwisetrenddata2017 = null;
@@ -229,65 +242,73 @@
             return constwisetrenddata2017;
         })();
 
-        var getBehat = assemplyconstmap_up.filter(function (object) {
-            return object.properties.ac === 1;
+        var getConstMap = assemplyconstmap_up.filter(function (object) {
+            return object.properties.ac === chosenConst;
+        })
+        
+        var getConstData = constwisetrenddata2017["up"]["constituencydata"].filter(function (object) {
+            // console.log(object.constId);
+            return object.constId === chosenConst;
         })
 
-        
+
+        // Create map with all constituencies
         drawAssemblyMap(".map", assemplyconstmap_up, {
-            type: 'state', // Statecode for map
-            statecode: 'U07', // Statecode for map
-            vhcode: 'up', // state vehicle code
-            defaultconst: 1, // state vehicle code
-            constnokey: 'ac', // add map topojson
-            constnamekey: 'ac_name', // add map topojson
-            scale: 2500, // size adjust until it sits well
-            center: [80.9462, 27.2], // enter lat long from google of UP
+            type: 'state', 
+            statecode: 'U07', 
+            vhcode: 'up', 
+            defaultconst: chosenConst, 
+            constnokey: 'ac', 
+            constnamekey: 'ac_name', 
+            scale: 2500, 
+            center: [80.9462, 27.2], 
             inset: true,
             enableEvents: false
         })
 
         
 
-        console.log(getBehat)
-        console.log(constwisetrenddata2017['up'][0])
+        console.log(getConstMap)
+        console.log(getConstData)
+        console.log(constwisetrenddata2017[chosenState][0])
 
         
-
-        drawAssemblyMap(".constmap", getBehat, {
+        // create map of chosen constituency
+        drawAssemblyMap(".constmap", getConstMap, {
             type: 'const', // Statecode for map
             statecode: 'U07', // Statecode for map
-            vhcode: 'up', // state vehicle code
-            defaultconst: 1, // state vehicle code
+            vhcode: chosenState, // state vehicle code
+            defaultconst: chosenConst, // state vehicle code
             constnokey: 'ac', // add map topojson
             constnamekey: 'ac_name', // add map topojson
-            scale: 40000, // size adjust until it sits well
+            scale: 30000, // size adjust until it sits well
             center: [77.7, 30.22], // enter lat long from google of UP
             inset: false,
             enableEvents: false
         })
 
         // About Constituency
-        document.getElementById("constno").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].constId;
-        document.getElementById("loksabhaseat").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].loksabhaSeats;
-        document.getElementById("district").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].district;
-        document.getElementById("swingseat").innerHTML = constwisetrenddata2017['up']["constituencydata"][0].swingSeat;
+        document.getElementById("constno").innerHTML = getConstData[0].constId;
+        document.getElementById("constituency-name").innerHTML = getConstData[0].constName;
+        document.getElementById("loksabhaseat").innerHTML = getConstData[0].loksabhaSeats;
+        document.getElementById("district").innerHTML = getConstData[0].district;
+        document.getElementById("swingseat").innerHTML = getConstData[0].swingSeat;
 
         // About Demographics
-        var demographicData = constwisetrenddata2017['up']["constituencydata"][0]["demographics"]
+        var demographicData = getConstData[0]["demographics"]
         document.getElementById("totalVoters").innerHTML = formatNumberInd(demographicData.totalElectorate);
         document.getElementById("maleVoters").innerHTML = formatNumberInd(demographicData.maleVoters);
         document.getElementById("femaleVoters").innerHTML = formatNumberInd(demographicData.femaleVoters);
         document.getElementById("thirdGender").innerHTML = formatNumberInd(demographicData.thirdGender)  ;      
         document.getElementById("totVotesPolled").innerHTML = formatNumberInd(demographicData.totalVotesPolled);
         document.getElementById("totMaleVotes").innerHTML = formatNumberInd(demographicData.votedMale);
-        document.getElementById("totFemaleVotes").innerHTML = formatNumberInd(demographicData.votedFemale);
+        document.getElementById("totFemaleVotes").innerHTML = formatNumberInd(demographicData.votedFemale);getConstData[0]
         document.getElementById("totThirdGenVotes").innerHTML = formatNumberInd(demographicData.votedThirdGender);
 
         // Past results table
         // drawAccTable(tabledata, ".past-results", ["Party", "Won", "Leading", "Total"])
 
-        var pastResultsData = constwisetrenddata2017['up']["constituencydata"][0]["pastResults"];
+        var pastResultsData = getConstData[0]["pastResults"];
 
         document.getElementById("winner2012").innerHTML = pastResultsData.winner2012
         document.getElementById("winner2017").innerHTML = pastResultsData.winner2017
@@ -299,30 +320,16 @@
         document.getElementById("marginVictoryPer2017").innerHTML = formatNumberPer(pastResultsData['victoryMargin%2017'])
         
         // Candidatewise results
-        var candidatewiseResultsData = constwisetrenddata2017['up']["constituencydata"][0]["allCandidates"];
+        var candidatewiseResultsData = getConstData[0]["allCandidates"];
 
         // ["party", "votes", "votes%", "candName", "status"]
 
         drawAccTable( candidatewiseResultsData,  ".allcandresult",   ["candName", "party", "votes", "votes%", "status"], {
             "party": "Party", "votes": "votes", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost"
         })
-
-        // "Introduction": "",
-        //         "Demographic Profile": "",
-        //             "Past Winners (Candidates and Parties)": "",
-        //                 "Candidates in 2012 and 2017": "",
-        //                     "NOTA (None of the Above)": "",
-        //                         "Voter Turnout": "",
-        //                             "Poll Dates": "",
-        //                                 "Result Dates": "",
-        //                                     "Number of Polling Stations": "",
-        //                                         "Lok Sabha elections 2014 and 2019": ""
-        
                 
-        var textData = constwisetrenddata2017['up']["constituencydata"][0]["text"]
-        // console.log(textData["Introduction"]);
+        var textData = getConstData[0]["text"]
         document.getElementById('const-intro').innerHTML = textData["Introduction"]
-        // document.getElementById('const-profile-content').innerHTML = "Hello World"
         document.getElementById("demographic-profile").innerHTML = textData["Demographic Profile"]
         document.getElementById("past-winners").innerHTML = textData["Past Winners (Candidates and Parties)"]
         document.getElementById("candin2012n2013").innerHTML = textData["Candidates in 2012 and 2017"]

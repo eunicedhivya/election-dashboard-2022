@@ -1,15 +1,3 @@
-var tabledata = [
-  {"Party":"AIADMK +","id":"AIADMK +","legend":"All India Anna Dravida Munnetra Kazhagam","name":"All India Anna Dravida Munnetra Kazhagam","Seats":75,"Won":75,"Leading":0,"Total":75},
-{"Party":"DMK +","id":"DMK +","legend":"Dravida Munetra Kazhagam","name":"Dravida Munetra Kazhagam","Seats":159,"Won":159,"Leading":0,"Total":159}
-];
-
-// var tabledata = [
-//   {"Party":"AIADMK","Won":134,"Leading":0,"Total":134},
-//   {"Party":"DMK","Won":89,"Leading":0,"Total":89},
-//   {"Party":"INC","Won":8,"Leading":0,"Total":8},
-//   {"Party":"IML","Won":1,"Leading":0,"Total":1}
-// ];
-
 function drawAccTable(data, selector, labels, textLabels){
 	// console.log("Share data:"+data);
     var table = d3.select(selector).append('table')
@@ -27,7 +15,22 @@ function drawAccTable(data, selector, labels, textLabels){
       .data(data)
       .enter()
       .append('tr')
-      .attr("class", "partyRow");
+      .attr("class", function(d){
+        console.log(d.status);
+        return "partyRow "+d.status;
+      })
+      .style("background-color", function(d){
+          console.log(d.status)
+          if(d.status === "Won"){
+              return "#DFFAD2";
+          }
+      })
+      .style("font-style", function(d){
+          console.log(d.status)
+          if(d.status === "Won"){
+              return "italic";
+          }
+      })
 
       var partyCell = partyRow.selectAll('td')
           .data(function (row) {

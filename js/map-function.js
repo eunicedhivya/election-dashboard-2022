@@ -104,9 +104,14 @@ function drawAssemblyMap(selector, mapdata, settings){
             })
             .attr('stroke', "#fff")
             .attr('stroke-width', "0.4")
-            .attr('fill', function(d,i){
-                return "#ccc";                
-            })
+    
+    if(settings.type == "constituency"){
+        constituency.attr('fill', "#ccc")
+    }else if(settings.type == "state"){
+      constituency.attr('fill', "#ccc")
+    }else if(settings.type == 'party-state'){
+        constituency.attr('fill', "red")
+    }
             
     if(settings.enableEvents !== false){
         constituency.on('mouseover', tool_tip.show) // to enable d3tip tooltips

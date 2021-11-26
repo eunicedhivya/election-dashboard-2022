@@ -12,6 +12,18 @@
 .tv9-dashboard .container p {
   font-size: 16px;
 }
+
+.tv9-dashboard .breadcrumb {
+  text-align: center;
+}
+.tv9-dashboard .breadcrumb a {
+  text-transform: uppercase;
+  color: #2d3dfd;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+}
+
 .tv9-dashboard .const-title {
   font-family: Georama;
   font-size: 40px;
@@ -31,6 +43,64 @@
   letter-spacing: 0em;
   text-align: center;
 }
+
+/* Constituency Dropdown ============================================================================= */
+.main-dash-nav {
+  text-align: center;
+}
+
+.constituency-dropbtn {
+  background-color: #ffff;
+  color: #333;
+  padding: 10px 40px 10px 20px;
+  font-size: 16px;
+  border: 1px solid #b9b9b9;
+  cursor: pointer;
+  border-radius: 50px;
+  text-align: left;
+  position: relative;
+}
+.constituency-dropbtn::after {
+  content: "\25BC";
+  position: absolute;
+  right: 18px;
+  color: #c4c4c4;
+}
+
+.constituency-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.constituency-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 20%);
+  z-index: 1;
+  margin-left: 25px;
+}
+
+.constituency-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.constituency-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.constituency-dropdown:hover .constituency-dropdown-content {
+  display: block;
+}
+
+.constituency-dropdown:hover .constituency-dropbtn {
+  background-color: #e8e8e8;
+}
+/* ============================================================================= */
 svg {
   /* background-color: #ccc; */
   width: 100%;
@@ -147,7 +217,7 @@ svg {
   color: #ff2020;
   line-height: 20px;
   margin: 0;
-  font-size: 14px;
+  font-size: 14px !important;
 }
 .points img {
   width: 30px;
@@ -202,7 +272,7 @@ svg {
   text-align: left;
 }
 
-.allcandresult .partyRow:nth-child(1) {
+.allcandresult .partyRow.won {
   background-color: #e5f8dc;
   font-style: italic;
 }
@@ -239,10 +309,6 @@ svg {
     display: none;
   }
 
-  .aboutconst {
-    text-align: center;
-  }
-
   .past-results table td:first-child,
   .past-results table th:first-child {
     width: 50%;
@@ -275,10 +341,6 @@ svg {
     border-bottom: none;
   }
 
-  /* .allcandresult table tbody tr {
-    margin-bottom: 20px;
-  } */
-
   .allcandresult table td:before {
     content: attr(data-label);
     position: absolute;
@@ -310,11 +372,26 @@ svg {
     content: "-";
   }
 }
+
+.party-intro {
+  display: flex;
+  column-gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.party-intro .party-logo {
+  border-radius: 50%;
+  align-self: center;
+}
 @media (min-width: 600px) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
 }
 @media (min-width: 768px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .aboutconst {
+    text-align: center;
+  }
   .allcandresult table td:first-child {
     width: 40%;
   }
@@ -344,6 +421,9 @@ svg {
 }
 @media (min-width: 1025px) {
   /* big landscape tablets, laptops, and desktops */
+  .aboutconst {
+    text-align: left;
+  }
   .inset-rect {
     stroke-width: 2px;
   }
@@ -384,24 +464,6 @@ svg {
     margin-left: 15%;
   }
 
-  .allcandresult table td:nth-child(1),
-  .allcandresult table th:nth-child(1) {
-    width: 20%;
-  }
-  .allcandresult table td:nth-child(2),
-  .allcandresult table td:nth-child(3),
-  .allcandresult table th:nth-child(2),
-  .allcandresult table th:nth-child(3) {
-    width: 10%;
-  }
-  .allcandresult table td:nth-child(4),
-  .allcandresult table th:nth-child(4) {
-    width: 50%;
-  }
-  .allcandresult table td:nth-child(5),
-  .allcandresult table th:nth-child(5) {
-    width: 10%;
-  }
   .stateRow {
     pointer-events: none;
   }
