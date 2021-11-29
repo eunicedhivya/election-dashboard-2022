@@ -21,7 +21,9 @@ var partycolors = {
     "Congress":	"red",
     "APS":	"grey",
     "RLD":	"blue",
-    "NISHAD":	"green"
+    "NISHAD":	"green",
+    "DDS":	"green",
+    "OTH":	"grey"
 }
 
 function drawAssemblyMap(selector, settings){
@@ -42,13 +44,14 @@ function drawAssemblyMap(selector, settings){
     
     var tool_tip = d3.tip()
         .attr("class", "map-tooltip")
-        .offset([60, 154])
+        .offset([120, 160])
         .html(function(d) { 
-            var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
+            var fdTrendData2017 = constwisetrenddata2017["constituencydata"].filter(function(obj){
                     return obj["constNo"] === d.properties.ac;
-                })
+            })
                 // partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]    
-
+            console.log(fdTrendData2017[0]);  
+            // var html = "Test" 
             var html = '<div class="tooltip-container">'
             html += '<div class="tooltip-header">'
             html +=     '<p>'+d.properties.ac_name+'</p>'
@@ -97,7 +100,7 @@ function drawAssemblyMap(selector, settings){
         svg.selectAll(".const")
             .data(stateconst).enter()
             .append("a")
-            .attr("xlink:href", "constituency.html")
+            .attr("xlink:href", "#constituency.html")
             
             .append("path")
             .attr("d", geoPath)
@@ -195,14 +198,6 @@ function drawAssemblyMap(selector, settings){
 
 } // end of mapfunction
 
-drawAssemblyMap(".map", {
-    statecode: 'U07', // Statecode for map
-    vhcode: 'up', // state vehicle code
-    defaultconst: 175, // state vehicle code
-    mapsource: 'assets/maps/UP.json', // add map topojson
-    scale: 2500, // size adjust until it sits well
-    center: [80.9462, 27.2] // enter lat long from google of UP
-})
 
 // function displayConstituency(){
 

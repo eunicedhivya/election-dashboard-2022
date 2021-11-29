@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Constituency</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- <link href="https://www.news9live.com/styles/themetvfile.min.e5df8239.css" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/constituency.css">
     <style>
        
     </style>
@@ -73,57 +73,59 @@
             </div>
         </section>
         <section class="container">
-            <div class="two-cols">
-                <div class="points">
-                    <div class="point">
-                        <img src="assets/img/tot-electorate.png" alt="">
-                        <div class="pointcontent">
-                            <p>Total Voters</p>
-                            <span id="totalVoters"></span>
+            <div class="point-section">
+                <div class="two-cols">
+                    <div class="points">
+                        <div class="point">
+                            <img src="assets/img/tot-electorate.png" alt="">
+                            <div class="pointcontent">
+                                <p>Total Voters</p>
+                                <span id="totalVoters"></span>
+                            </div>
+                        </div>
+                        <div class="point">
+                            <p>Total Votes Polled</p>
+                            <span id="totVotesPolled"></span>
                         </div>
                     </div>
-                    <div class="point">
-                        <p>Total Votes Polled</p>
-                        <span id="totVotesPolled"></span>
-                    </div>
-                </div>
-                <div class="points">
-                    <div class="point">
-                        <img src="assets/img/male-voters.png" alt="">
-                        <div class="pointcontent">
-                            <p>Male Voters</p>
-                            <span id="maleVoters"></span>
+                    <div class="points">
+                        <div class="point">
+                            <img src="assets/img/male-voters.png" alt="">
+                            <div class="pointcontent">
+                                <p>Male Voters</p>
+                                <span id="maleVoters"></span>
+                            </div>
+                        </div>
+                        <div class="point">
+                            <p>Total Votes <small>(2017)</small></p>
+                            <span id="totMaleVotes"></span>
                         </div>
                     </div>
-                    <div class="point">
-                        <p>Total Votes <small>(2017)</small></p>
-                        <span id="totMaleVotes"></span>
-                    </div>
-                </div>
-                <div class="points">
-                    <div class="point">
-                        <img src="assets/img/female-voters.png" alt="">
-                        <div class="pointcontent">
-                            <p>Female Voters</p>
-                            <span id="femaleVoters"></span>
+                    <div class="points">
+                        <div class="point">
+                            <img src="assets/img/female-voters.png" alt="">
+                            <div class="pointcontent">
+                                <p>Female Voters</p>
+                                <span id="femaleVoters"></span>
+                            </div>
+                        </div>
+                        <div class="point">
+                            <p>Total Votes <small>(2017)</small></p>
+                            <span id="totFemaleVotes"></span>
                         </div>
                     </div>
-                    <div class="point">
-                        <p>Total Votes <small>(2017)</small></p>
-                        <span id="totFemaleVotes"></span>
-                    </div>
-                </div>
-                <div class="points">
-                    <div class="point">
-                        <img src="assets/img/female-voters.png" alt="">
-                        <div class="pointcontent">
-                            <p>Third Gender</p>
-                            <span id="thirdGender"></span>
+                    <div class="points">
+                        <div class="point">
+                            <img src="assets/img/female-voters.png" alt="">
+                            <div class="pointcontent">
+                                <p>Third Gender</p>
+                                <span id="thirdGender"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="point">
-                        <p>Total Votes <small>(2017)</small></p>
-                        <span id="totThirdGenVotes"></span>
+                        <div class="point">
+                            <p>Total Votes <small>(2017)</small></p>
+                            <span id="totThirdGenVotes"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="table">
@@ -196,16 +198,14 @@
     <script src="js/topojson.v2.min.js"></script>
     <script src="js/d3-tip.js"></script> <!--used with topojson map-->
     <script src="js/functions.js"></script> <!--used with topojson map-->
-    <script src="js/map-function.js"></script>
+    <script src="js/map-constituency.js"></script>
     <script src="js/accordion-table.js"></script>
     <script>
         // Chosen State and Constituency
         var chosenState = "up";
         var chosenConst = 1;
 
-            
-
-        // import topojson map
+        // import topojson map for State
         var assemplyconstmap_up = (function() {
             assemplyconstmap_up = null;
             jQuery.ajax({
@@ -213,7 +213,7 @@
                 'global': false,
                 'dataType': 'json',
                 'cache': false,
-                'url': 'assets/maps/UP.json',
+                'url': 'assets/maps/up-v2.json',
                 'success': function(stateShape) {
                     assemplyconstmap_up = topojson.feature(stateShape, stateShape.objects.collection).features;
                     
@@ -222,11 +222,7 @@
             return assemplyconstmap_up;
         })();        
 
-        // document.getElementById("change-const-page").addEventListener("change", function() {
-        //     // chosenState = this.value;
-        //     // chosenConst = 3;
-        // });
-        
+        // import Data API for Constituency  
         var constwisetrenddata2017 = (function() {
             constwisetrenddata2017 = null;
             jQuery.ajax({
@@ -242,17 +238,7 @@
             return constwisetrenddata2017;
         })();
 
-        var getConstMap = assemplyconstmap_up.filter(function (object) {
-            return object.properties.ac === chosenConst;
-        })
-        
-        var getConstData = constwisetrenddata2017["up"]["constituencydata"].filter(function (object) {
-            // console.log(object.constId);
-            return object.constId === chosenConst;
-        })
-
-
-        // Create map with all constituencies
+        // Create statemap with all constituencies
         drawAssemblyMap(".map", assemplyconstmap_up, {
             type: 'state', 
             statecode: 'U07', 
@@ -264,16 +250,19 @@
             center: [80.9462, 27.2], 
             inset: true,
             enableEvents: false
+        })   
+
+        // Get the current constituency data from map data
+        var getConstMap = assemplyconstmap_up.filter(function (object) {
+            return object.properties.ac === chosenConst;
         })
 
-        
+        // Get the current constituency data from dataset
+        var getConstData = constwisetrenddata2017["up"]["constituencydata"].filter(function (object) {
+            return object.constId === chosenConst;
+        })
 
-        console.log(getConstMap)
-        console.log(getConstData)
-        console.log(constwisetrenddata2017[chosenState][0])
-
-        
-        // create map of chosen constituency
+        // create constituency map of chosen constituency
         drawAssemblyMap(".constmap", getConstMap, {
             type: 'const', // Statecode for map
             statecode: 'U07', // Statecode for map
@@ -281,8 +270,8 @@
             defaultconst: chosenConst, // state vehicle code
             constnokey: 'ac', // add map topojson
             constnamekey: 'ac_name', // add map topojson
-            scale: 30000, // size adjust until it sits well
-            center: [77.7, 30.22], // enter lat long from google of UP
+            scale: getConstMap[0].properties.scale, // size adjust until it sits well
+            center: getConstMap[0].properties.center, // enter lat long from google of UP
             inset: false,
             enableEvents: false
         })
@@ -295,19 +284,17 @@
         document.getElementById("swingseat").innerHTML = getConstData[0].swingSeat;
 
         // About Demographics
-        var demographicData = getConstData[0]["demographics"]
-        document.getElementById("totalVoters").innerHTML = formatNumberInd(demographicData.totalElectorate);
-        document.getElementById("maleVoters").innerHTML = formatNumberInd(demographicData.maleVoters);
-        document.getElementById("femaleVoters").innerHTML = formatNumberInd(demographicData.femaleVoters);
-        document.getElementById("thirdGender").innerHTML = formatNumberInd(demographicData.thirdGender)  ;      
-        document.getElementById("totVotesPolled").innerHTML = formatNumberInd(demographicData.totalVotesPolled);
-        document.getElementById("totMaleVotes").innerHTML = formatNumberInd(demographicData.votedMale);
-        document.getElementById("totFemaleVotes").innerHTML = formatNumberInd(demographicData.votedFemale);getConstData[0]
-        document.getElementById("totThirdGenVotes").innerHTML = formatNumberInd(demographicData.votedThirdGender);
+        // var demographicData = getConstData[0]["demographics"]
+        document.getElementById("totalVoters").innerHTML = formatNumberInd(getConstData[0].totalElectorate);
+        document.getElementById("maleVoters").innerHTML = formatNumberInd(getConstData[0].maleVoters);
+        document.getElementById("femaleVoters").innerHTML = formatNumberInd(getConstData[0].femaleVoters);
+        document.getElementById("thirdGender").innerHTML = formatNumberInd(getConstData[0].thirdGender)  ;      
+        document.getElementById("totVotesPolled").innerHTML = formatNumberInd(getConstData[0].totalVotesPolled);
+        document.getElementById("totMaleVotes").innerHTML = formatNumberInd(getConstData[0].votedMale);
+        document.getElementById("totFemaleVotes").innerHTML = formatNumberInd(getConstData[0].votedFemale);getConstData[0]
+        document.getElementById("totThirdGenVotes").innerHTML = formatNumberInd(getConstData[0].votedThirdGender);
 
         // Past results table
-        // drawAccTable(tabledata, ".past-results", ["Party", "Won", "Leading", "Total"])
-
         var pastResultsData = getConstData[0]["pastResults"];
 
         document.getElementById("winner2012").innerHTML = pastResultsData.winner2012
@@ -321,8 +308,6 @@
         
         // Candidatewise results
         var candidatewiseResultsData = getConstData[0]["allCandidates"];
-
-        // ["party", "votes", "votes%", "candName", "status"]
 
         drawAccTable( candidatewiseResultsData,  ".allcandresult",   ["candName", "party", "votes", "votes%", "status"], {
             "party": "Party", "votes": "votes", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost"

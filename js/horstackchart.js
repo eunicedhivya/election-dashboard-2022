@@ -1,37 +1,37 @@
-votesharedata = [{"party":"BJP","votes":58,"votes%":41.42857142857143,"status":"lead"},{"party":"BSP","votes":22,"votes%":15.714285714285714,"status":"lead"},{"party":"SP","votes":19,"votes%":13.571428571428571,"status":"lead"},{"party":"DDS","votes":18,"votes%":12.857142857142858,"status":"lead"},{"party":"OTH","votes":23,"votes%":16.4285714286,"status":"lead"}]
+// votesharedata = 
 
-
-var partycolors={
-    "BJP": "orange",
-    "BSP": "green",
-    "SP": "aqua",
-    "DDS": "purple",
-    "OTH": "grey"
-}
 
 
 function drawHorizontalStackChart(selection, stackdata, props) {
-    console.log(stackdata);
+    // console.log(stackdata);
     
     var hordivcont = d3.select(selection)
     hordivcont.html(null)
 
     var addContainer = hordivcont.append("div")
         .attr("class", "horbarchart")
+        .attr("data-label", props.type)
 
     var addLegend = hordivcont.append("div")
         .attr("class", "horbarchart-legend")
+        .style("width", "fit-content")
+        .style("margin", "0 auto")
 
     addContainer.selectAll(".block")
         .data(stackdata).enter()
         .append("div").attr("class", "block")
+        .style("display",  "inline-block")
         .style("background-color",  function(d,i){
+            console.log(d[props["label"]]);
+            console.log(partycolors["DDS"]);
+            
             return partycolors[d[props["label"]]];
 
         })
         .style("width", function(d,i){
             return d[props["valueper"]]+"%";
         })
+        .style("height", "28px")
         // .html(function(d,i){
         //     return '<span class="value">'+d[props["value"]]+'</span> <span class="label">'+d[props["label"]]+'</span>';
         // })
@@ -46,16 +46,16 @@ function drawHorizontalStackChart(selection, stackdata, props) {
             return partycolors[d[props["label"]]];
 
         })
+        .style("width", "30px")
+        .style("height", "8px")
+        .style("text-align", "center")
+        .style("font-size", "14px")
+        .style("display", "inline-block")
+        .style("margin", "0 10px")
         .html(function(d,i){
-            return '<span class="partylabel">'+d[props["label"]]+'</span> <span class="value">'+d[props["value"]]+'</span>';
+            return '<span class="partylabel" style="display:block;font-weight:bold;margin: 10px 0 0 0;">'+d[props["label"]]+'</span> <span class="value">'+d[props["value"]]+'</span>';
         })
         
 
 } // end of horstackchart
 
-drawHorizontalStackChart("#seatshare2017", votesharedata, {
-    "type": "seatshare",
-    "valueper": "votes%",
-    "label": "party",
-    "value": "votes"
-})

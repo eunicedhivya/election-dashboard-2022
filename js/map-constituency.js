@@ -24,10 +24,12 @@ var partycolors = {
     "NISHAD":	"green"
 }
 
-function drawAssemblyMap(selector, settings){
+function drawAssemblyMap(selector, mapdata, settings){
     var width = 430, height = 350; 
     var state = settings.statecode;
     var source = settings.mapsource;
+
+    console.log(mapdata)
 
     // empty selected container (required for redrawing map)
     d3.select(selector).html(null)
@@ -45,13 +47,13 @@ function drawAssemblyMap(selector, settings){
         .offset([60, 154])
         .html(function(d) { 
             var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-                    return obj["constNo"] === d.properties.ac;
+                    return obj["constNo"] === d.properties[settings.constnokey];
                 })
                 // partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]    
 
             var html = '<div class="tooltip-container">'
             html += '<div class="tooltip-header">'
-            html +=     '<p>'+d.properties.ac_name+'</p>'
+            html +=     '<p>'+d.properties[settings.constnamekey]+'</p>'
             html +=     '<p>General</p>'
             html += '</div>'
             html += '<div class="tooltip-content">'
@@ -88,121 +90,111 @@ function drawAssemblyMap(selector, settings){
     var geoPath = d3.geoPath()
         .projection(projection)
     
-    d3.json(source, function(error, stateShape){
+    // d3.json(source, function(error, stateShape){
         
         // Converts and extracts topojson to map
-        var stateconst = topojson.feature(stateShape, stateShape.objects.collection).features;
+        // var stateconst = topojson.feature(stateShape, stateShape.objects.collection).features;
         // console.log(stateconst);
 
-        svg.selectAll(".const")
-            .data(stateconst).enter()
-            .append("a")
-            .attr("xlink:href", "constituency.html")
-            
-            .append("path")
+    var constituency =  svg.selectAll(".const")
+            .data(mapdata).enter().append("path")
             .attr("d", geoPath)
             .attr("class", function(d) {
-                return "const c" + d.properties.ac;
+                return "const c" + d.properties[settings.constnokey];
             })
             .attr('stroke', "#fff")
             .attr('stroke-width', "0.4")
-            .attr('fill', function(d,i){
-                return "#ccc";                
-            })
-            .on('mouseover', tool_tip.show) // to enable d3tip tooltips
+    
+    if(settings.type == "constituency"){
+        constituency.attr('fill', "#ccc")
+    }else if(settings.type == "state"){
+      constituency.attr('fill', "#ccc")
+    }else if(settings.type == 'party-state'){
+        constituency.attr('fill', "red")
+    }
+            
+    if(settings.enableEvents !== false){
+        constituency.on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
-            // .on('click', function(d){
+            .on('click', function(d){
 
-            //     d3.selectAll(".const").attr('stroke', "#fff").attr('stroke-width', "0.4")
-            //     d3.select(".c"+d.properties.ac).attr("stroke", "black").attr('stroke-width', "5")
+                d3.selectAll(".const").attr('stroke', "#fff").attr('stroke-width', "0.4")
+                d3.select(".c"+d.properties[settings.constnokey]).attr("stroke", "#ff2020").attr('stroke-width', "5")
 
-            //     var groupElement2 = document.querySelector(".c"+d.properties.ac).getBBox();
-            //     // console.log(groupElement2)
+                var groupElement2 = document.querySelector(".c"+d.properties[settings.constnokey]).getBBox();
+                // console.log(groupElement2)
 
-            //     d3.select(".inset-rect").transition().duration(500)
-            //         .attr("x", groupElement2.x-2)
-            //         .attr("y", groupElement2.y-2)
-            //         .attr("width", groupElement2.width + 5)
-            //         .attr("height", groupElement2.height + 5);
-
-            //     var fdMapData = stateconst.filter(function(obg){
-            //         // console.log(obg.properties.ac === d.properties.ac)
-            //         return obg.properties.ac === 1;                
-            //     })
-
-            //     console.log(fdMapData)
+                d3.select(".inset-rect").transition().duration(500)
+                    .attr("x", groupElement2.x-2)
+                    .attr("y", groupElement2.y-2)
+                    .attr("width", groupElement2.width + 5)
+                    .attr("height", groupElement2.height + 5)
 
                 
-            //     var svg2 = d3.select(".constmap")
-            //         .append("svg")
-            //         .attr("class", "othermap")
-            //         .attr("viewBox", "0 0 " + width + " " + height)
-            //         .attr("preserveAspectRatio", "xMinYMin")
-            //         .append("g")
+            })
+    } // end of settings.enableEvents if true
+    
 
-            //     var projection1 = d3.geoMercator()
-            //         .scale(40000)
-            //         .center([77.7, 30.22]) // latlong for Behat
-            //         .translate([width / 2, height / 2])
+            d3.select(".c"+settings.defaultconst).attr("stroke", "#ff2020")
+            .attr("stroke-width", "5")
 
-            //     var geoPath1 = d3.geoPath()
-            //         .projection(projection1)
+            // create Inset if True
+            // ================================================================
+            if(settings.inset === true){
 
-
-            //     svg2.selectAll(".selectconst")
-            //         .data(fdMapData).enter().append("path")
-            //         .attr("d", geoPath1)
-            //         .attr("class", function(d) {
-            //             return "selectconst c";
-            //         })
-            //         .attr('stroke', "#fff")
-            //         .attr('stroke-width', "0.4")
-            //         .attr('fill', function(d,i){
-            //             return "#fff";
-                        
-            //         })
-
+                svg.append("rect")
+                .attr("class", "inset-rect")
+                .attr("x", 0)
+                .attr("width", width)
+                .attr("y", 0)
+                .attr("height", height)
+                .attr("stroke-opacity", 0);
                 
-            // })
+                var groupElement = document.querySelector(".c"+settings.defaultconst).getBBox();
+                // console.log(groupElement)
+
+                d3.select(".inset-rect").transition().duration(1500)
+                    .attr("x", groupElement.x-4)
+                    .attr("y", groupElement.y-4)
+                    .attr("width", groupElement.width + 10)
+                    .attr("height", groupElement.height + 10)
+                    .attr("stroke-opacity", 1);
+            }
 
             // ====================================
             // Create Dropdown from map source            
-            var selectDropdown = d3.select("#const-list")
 
-            selectDropdown.html(null);
+           if(settings.type === "state"){
+                var selectDropdown = d3.select("#const-list");
+                
+                selectDropdown.html(null);
 
-            var options = selectDropdown.selectAll('option')
-                .data(stateconst).enter()
-                .append('option')
-                .attr("value", function (d) { 
-                    return d.properties.ac; 
-                })
-                .attr("data-id", function (d) { 
-                    return d.properties.ac; 
-                })
-                .text(function (d) {
-                    return d.properties.ac_name;
-                }); 
+                // console.log(mapdata);
 
+                var options = selectDropdown.selectAll('option')
+                    .data(mapdata).enter()
+                    .append('option')
+                    .attr("value", function (d) { 
+                        return d.properties[settings.constnokey]; 
+                    })
+                    .attr("data-id", function (d) { 
+                        return d.properties[settings.constnokey]; 
+                    })
+                    .text(function (d) {
+                        return d.properties[settings.constnamekey];
+                    }); 
+
+           }
 
 
             $('#const-list').val(settings.defaultconst).trigger('change')
 
-    }) // Statelevel Source
+    // }) // Statelevel Source
 
     
  
 
 } // end of mapfunction
-
-drawAssemblyMap(".map", {
-    statecode: 'U07', // Statecode for map
-    vhcode: 'up', // state vehicle code
-    defaultconst: 175, // state vehicle code
-    mapsource: 'assets/maps/UP.json', // add map topojson
-    scale: 2500, // size adjust until it sits well
-    center: [80.9462, 27.2] // enter lat long from google of UP
-})
 
 // function displayConstituency(){
 
