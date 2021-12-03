@@ -12,88 +12,175 @@
         href="https://fonts.googleapis.com/css2?family=Georama:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+        /* Horizontal Bar Chart */
+        .horstackchart {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .horbarchart {
+            margin-bottom: 10px;
+            margin-top: 45px;
+            font-family: 'Georama', sans-serif;
+        }
+        .horbarchart::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 50%;
+            top: -30px;
+            width: 50%;
+            transform: translateX(-50%);
+            padding-left: 0;
+            font-weight: 400;
+            font-size: 14px;
+            color: #a3a3a3;
+            text-align: center;
+            
+        }
+        .horbarchart::after {
+            content: "";
+            width: 0;
+            height: 40px;
+            position: absolute;
+            border-left: 0.12em dotted #000000;
+            top: -6px;
+            left: 50%;
+            /* font-family: 'Georama', sans-serif; */
+        }
+        .block {
+            transition: all 0.3s;
+            cursor: pointer;
+            width: 0;
+            opacity: 1;
+        }
+
+        .block:hover {
+            opacity: 0.7;
+        }
+
+        /* Map ====================================== */
+
+        .map path:hover {
+            fill: #000000;
+        }
+
+        /* Map Tooltip */
+        .map-tooltip {
+        text-align: left;
+        font-family: "Georama", sans-serif;
+        }
+
+        .map-tooltip::before {
+        position: absolute;
+        content: "";
+        width: 30px;
+        height: 8px;
+        background-color: black;
+        top: 28px;
+        left: -30px;
+        }
+
+        .tooltip-header p {
+        display: inline-block;
+        font-size: 15px !important;
+        padding: 5px 10px;
+        margin: 0 0 0 0;
+        }
+        .tooltip-content {
+        background-color: #000000;
+        width: fit-content;
+        padding: 10px;
+        }
+        .tooltip-content .datapoint {
+        display: inline-block;
+        font-size: 21px;
+        padding: 5px 10px;
+        color: #fff;
+        font-weight: 700;
+        border-left: 1px solid #fff;
+        }
+        .tooltip-content .datapoint:first-child {
+        border-left: none;
+        }
+        .tooltip-content .datapoint p {
+        margin: 0;
+        font-size: 21px;
+        font-weight: 700;
+        }
+        .tooltip-header p:first-child {
+        background-color: #978282;
+        }
+        .tooltip-header p:last-child {
+        background-color: #a1cdca;
+        }
+        .gotoLink {
+        background-color: #378eaa;
+        width: fit-content;
+        padding: 5px 10px;
+        }
+        .gotoLink a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        }
+        
+    </style>
 </head>
 
 <body>
-    <div class="tv9-dashboard">
-        <section class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="dash-intro">
-                        <h1 class="dash-title"><span id="stateName">Uttar Pradesh</span> assembly election 2021 </h1>
-                        <p id="stateIntro">The Taliban are reported to have raised their flag above a key border post
-                            between Afghanistan and Pakistan, and claim it is now under their control.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <nav class="yearwisefilters">
-                    <button class="filterBtns" id="year2012">2012</button>
-                    <button class="filterBtns active" id="year2017">2017</button>
-                    <!-- <button class="filterBtns" id="year2022">2022</button> -->
-                </nav>
-            </div>
-            <div class="row barchart-section">
-                <div id="seatshare2017" class="horstackchart">
 
-                </div>
-                <div id="voteshare2017" class="horstackchart">
 
-                </div>
+            <h1 class="dash-title"><span id="stateName">Uttar Pradesh</span> assembly election 2021</h1>
+            <p id="stateIntro">The Taliban are reported to have raised their flag above a key border post
+                between Afghanistan and Pakistan, and claim it is now under their control.</p>
+            <nav class="yearwisefilters">
+                <button class="filterBtns" id="year2012">2012</button>
+                <button class="filterBtns active" id="year2017">2017</button>
+                <!-- <button class="filterBtns" id="year2022">2022</button> -->
+            </nav>
+            <div id="seatshare2017" class="horstackchart">
+            
             </div>
-            <div class="row alliance-section">
-                <h2> Alliance</h2>
-                <ul class="alliance-list">
-                    <!-- <li>BJP + Apna Dal (Sonelal) + Suheldev Bharatiya Samaj Party (SBSP)</li>
-                    <li>Samajwadi Party (SP) + Congress</li> -->
-                </ul>
+            <div id="voteshare2017" class="horstackchart">
+            
             </div>
-            <div class="map-section row">
-                <div class="col">
+
+            <h2> Alliance</h2>
+            <ul class="alliance-list">
+            </ul>
+           
                     <div class="map">
-
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="point">
-                                <img src="assets/img/tot-electorate.png" alt="">
-                                <div class="point-content">
-                                    <p>Total Voters</p>
-                                    <span id="totStateVoters"></span>
-                                </div>
-                            </div>
-                            <div class="point">
-                                <img src="assets/img/male-voters.png" alt="">
-                                <div class="point-content">
-                                    <p>Male Voters</p>
-                                    <span id="totStateMaleVoters"> </span>
-                                </div>
-                            </div>
-                            <div class="point">
-                                <img src="assets/img/female-voters.png" alt="">
-                                <div class="point-content">
-                                    <p>Female Voters</p>
-                                    <span id="totStateFemaleVoters"> </span>
-                                </div>
-                            </div>
-                            <div class="point">
-                                <img src="assets/img/voter-turnout.png" alt="">
-                                <div class="point-content">
-                                    <p>Voter Turnout</p>
-                                    <span id="totStateVoterTurnout"> </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="map-table" class="table">
-
+                    <div class="point">
+                        <img src="assets/img/tot-electorate.png" alt="">
+                        <div class="point-content">
+                            <p>Total Voters</p>
+                            <span id="totStateVoters"></span>
                         </div>
                     </div>
-                </div>
-
-            </div>
+                    <div class="point">
+                        <img src="assets/img/male-voters.png" alt="">
+                        <div class="point-content">
+                            <p>Male Voters</p>
+                            <span id="totStateMaleVoters"> </span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <img src="assets/img/female-voters.png" alt="">
+                        <div class="point-content">
+                            <p>Female Voters</p>
+                            <span id="totStateFemaleVoters"> </span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <img src="assets/img/voter-turnout.png" alt="">
+                        <div class="point-content">
+                            <p>Voter Turnout</p>
+                            <span id="totStateVoterTurnout"> </span>
+                        </div>
+                    </div>
     </div>
     </section>
     </div>

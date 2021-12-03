@@ -14,16 +14,18 @@ var party_abrev = {
 //format to substitute data with color
 var partycolors = { 
     "BJP":	"#ff9900",
-    "SBSP":	"#ff9900",
-    "BSP":	"#ff9900",
+    "SBSP":	"red",
+    "BSP":	"blue",
     "SP":	"red",
-    "IND":	"red",
+    "IND":	"grey",
     "Congress":	"red",
-    "APS":	"grey",
-    "RLD":	"blue",
-    "NISHAD":	"green",
+    "AD(S)": "#ff9900",
+    "RLD":	"red",
+    "NISHAD":	"#ff9900",
     "DDS":	"green",
-    "OTH":	"grey"
+    "Independent":	"grey",
+    "OTH":	"grey",
+    "undecided":"grey"
 }
 
 function drawAssemblyMap(selector, settings){
@@ -46,11 +48,15 @@ function drawAssemblyMap(selector, settings){
         .attr("class", "map-tooltip")
         .offset([120, 160])
         .html(function(d) { 
-            var fdTrendData2017 = constwisetrenddata2017["constituencydata"].filter(function(obj){
-                    return obj["constNo"] === d.properties.ac;
+
+            var fdFillData = constwisetrenddata2017["mapdata"].filter(function(r, j){
+                    return parseInt(r.constNo) === d.properties.ac;
             })
-                // partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]    
-            console.log(fdTrendData2017[0]);  
+
+            var year2022 = fdFillData[0]["party2022"]
+            var year2017 = fdFillData[0]["party2017"]
+            var year2012 = fdFillData[0]["party2012"]
+                // return partycolors[fdFillData[0]["party"+settings.year]];
             // var html = "Test" 
             var html = '<div class="tooltip-container">'
             html += '<div class="tooltip-header">'
@@ -59,16 +65,16 @@ function drawAssemblyMap(selector, settings){
             html += '</div>'
             html += '<div class="tooltip-content">'
             html +=     '<div class="datapoint">'
-            html +=         '<p>2006</p>'
-            html +=         '<span>BJP</span>'
+            html +=         '<p>2012</p>'
+            html +=         '<span style="color:'+partycolors[year2012]+'">'+year2012+'</span>'
             html +=     '</div>'
             html +=     '<div class="datapoint">'
             html +=         '<p>2017</p>'
-            html +=         '<span style="color:'+partycolors[party_abrev[fdTrendData2017[0]["leadingParty"]]]+'">'+party_abrev[fdTrendData2017[0]["leadingParty"]]+'</span>'
+            html +=         '<span style="color:'+partycolors[year2017]+'">'+year2017+'</span>'
             html +=     '</div>'
             html +=     '<div class="datapoint">'
             html +=         '<p>2022</p>'
-            html +=         '<span>BJP</span>'
+            html +=         '<span style="color:'+partycolors[year2022]+'">'+year2022+'</span>'
             html +=     '</div>'
             html += '</div>'
             html += '<div class="gotoLink">'
@@ -101,7 +107,6 @@ function drawAssemblyMap(selector, settings){
             .data(stateconst).enter()
             .append("a")
             .attr("xlink:href", "#constituency.html")
-            
             .append("path")
             .attr("d", geoPath)
             .attr("class", function(d) {
@@ -109,11 +114,20 @@ function drawAssemblyMap(selector, settings){
             })
             .attr('stroke', "#fff")
             .attr('stroke-width', "0.4")
-            .attr('fill', function(d,i){
-                return "#ccc";                
-            })
+            .attr('fill', "#fff")
             .on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide) // to disable d3tip tooltips
+            .transition().duration(400)
+            .attr('fill', function(d,i){
+                console.log(d.properties);
+                var fdFillData = constwisetrenddata2017["mapdata"].filter(function(r, j){
+                    return parseInt(r.constNo) === d.properties.ac;
+                })
+                // console.log(fdFillData[0]);
+                return partycolors[fdFillData[0]["party"+settings.year]];         
+                // return black;       
+            })
+            
             // .on('click', function(d){
 
             //     d3.selectAll(".const").attr('stroke', "#fff").attr('stroke-width', "0.4")
@@ -224,3 +238,4 @@ function drawAssemblyMap(selector, settings){
 //     d3.select(".trailingCandName").html(fdTrendData2017[0]["trailingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["trailingParty"]]+")</span>")
 //     d3.select(".margin").html(fdTrendData2017[0]["margin"].toLocaleString('en-IN'))
 // }
+

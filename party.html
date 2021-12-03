@@ -41,9 +41,8 @@
                 </div>
                 <div class="col">
                     <nav class="yearwisefilters">
-                        <button class="filterBtns active" id="year2012">2012</button>
-                        <button class="filterBtns" id="year2017">2017</button>
-                        <button class="filterBtns" id="year2022">2022</button>
+                        <button class="filterBtns" id="year2012">2012</button>
+                        <button class="filterBtns active" id="year2017">2017</button>
                     </nav>
                     <div class="seat-info">
                         <span id="seats-of-party">80/200</span>
@@ -65,10 +64,10 @@
     <script src="js/map-party.js"></script>
     <script src="js/accordion-table.js"></script>
     <script>
-        var chosenState = "UP";
+        var chosenState = "up";
         var chosenParty = "BSP";
-        // var chosenConst = 1;
-        // import topojson map data
+        var chosenYear = "2017";
+        
         var assemplyconstmap_up = (function () {
             assemplyconstmap_up = null;
             jQuery.ajax({
@@ -101,16 +100,68 @@
             return partywise_api;
         })();
 
-        // console.log(partywise_api[chosenState]);
-        // console.log(partywise_api[chosenState]['cand-list']);
-
+       
         var candData = partywise_api[chosenState].filter(function (obj) {
             return obj["party-abbr"] == chosenParty;
         });
 
-        console.log(candData[0]);
-        // Create map with all constituencies
-        drawAssemblyMap(".map", candData[0]["cand-list"], assemplyconstmap_up, {
+        // console.log(candData[0]);
+
+        document.getElementById("year2012").addEventListener("click", function (obj) {
+                d3.selectAll(".filterBtns").attr("class", "filterBtns")
+                this.classList = "filterBtns active";
+                drawAssemblyMap(".map", candData[0]["cand-list"]["2012"], assemplyconstmap_up, {
+                    type: 'party-state',
+                    statecode: 'U07',
+                    vhcode: 'up',
+                    year: '2017',
+                    party: chosenParty,
+                    constnokey: 'ac',
+                    constnamekey: 'ac_name',
+                    scale: 2500,
+                    center: [80.9462, 27.2],
+                    inset: true,
+                    enableEvents: false
+                })
+
+
+                drawAccTable(candData[0]["cand-list"]["2012"], ".allcandresult", ["candName", "party", "constName", "votes%", "status"], {
+                    "party": "Party", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost", "constName": "Constituency"
+                })
+
+        })
+        document.getElementById("year2017").addEventListener("click", function (obj) {
+                d3.selectAll(".filterBtns").attr("class", "filterBtns")
+                this.classList = "filterBtns active";
+
+                drawAssemblyMap(".map", candData[0]["cand-list"]["2017"], assemplyconstmap_up, {
+                type: 'party-state',
+                statecode: 'U07',
+                vhcode: 'up',
+                year: '2017',
+                party: chosenParty,
+                constnokey: 'ac',
+                constnamekey: 'ac_name',
+                scale: 2500,
+                center: [80.9462, 27.2],
+                inset: true,
+                enableEvents: false
+            })
+
+
+            drawAccTable(candData[0]["cand-list"]["2017"], ".allcandresult", ["candName", "party", "constName", "votes%", "status"], {
+                "party": "Party", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost", "constName": "Constituency"
+            })
+        })
+        // document.getElementById("year2022").addEventListener("click", function (obj) {
+        //         d3.selectAll(".filterBtns").attr("class", "filterBtns")
+        //         this.classList = "filterBtns active";
+        // })
+
+        d3.select("#partyName").html(candData[0]["party-name"])
+        d3.select("#partyIntro").html(candData[0]["party-intro"])
+
+        drawAssemblyMap(".map", candData[0]["cand-list"][chosenYear], assemplyconstmap_up, {
             type: 'party-state',
             statecode: 'U07',
             vhcode: 'up',
@@ -124,12 +175,8 @@
             enableEvents: false
         })
 
-        d3.select("#partyName").html(candData[0]["party-name"])
-        d3.select("#partyIntro").html(candData[0]["party-intro"])
-
-        
-
-        drawAccTable(candData[0]["cand-list"], ".allcandresult", ["candName", "party", "constName", "votes%", "status"], {
+    
+        drawAccTable(candData[0]["cand-list"][chosenYear], ".allcandresult", ["candName", "party", "constName", "votes%", "status"], {
             "party": "Party", "votes%": "Votes%", "candName": " Name", "status": "Won/Lost", "constName": "Constituency"
         })
 

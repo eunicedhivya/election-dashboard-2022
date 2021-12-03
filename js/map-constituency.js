@@ -105,8 +105,8 @@ function drawAssemblyMap(selector, mapdata, settings){
             .attr('stroke', "#fff")
             .attr('stroke-width', "0.4")
     
-    if(settings.type == "constituency"){
-        constituency.attr('fill', "#ccc")
+    if(settings.type == "const"){
+        constituency.attr('fill', "red")
     }else if(settings.type == "state"){
       constituency.attr('fill', "#ccc")
     }else if(settings.type == 'party-state'){
@@ -148,6 +148,9 @@ function drawAssemblyMap(selector, mapdata, settings){
                 .attr("width", width)
                 .attr("y", 0)
                 .attr("height", height)
+                .attr("fill", "transparent")
+                .attr("stroke", "red")
+                .attr("stroke-width", "2px")
                 .attr("stroke-opacity", 0);
                 
                 var groupElement = document.querySelector(".c"+settings.defaultconst).getBBox();

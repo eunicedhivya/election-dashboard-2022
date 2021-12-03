@@ -75,47 +75,22 @@ function drawAssemblyMap(selector, filldata, mapdata, settings){
             .attr('stroke-width', "0.4")
             .on('mouseover', tool_tip.show) // to enable d3tip tooltips
             .on('mouseout', tool_tip.hide)
-    
-    constituency.attr('fill', function(d){
-        var fdFillData = filldata.filter(function(obj){
-            // console.log(obj)
-            return parseInt(obj["constId"]) === d.properties.ac;
+
+    constituency.transition().duration(400)
+        .attr('fill', function(d){
+            var fdFillData = filldata.filter(function(obj){
+                // console.log(obj)
+                return parseInt(obj["constId"]) === d.properties.ac;
+            })
+            if(fdFillData[0] !== undefined){
+                return partycolors[settings.year][settings.party];
+            }else{
+                return "#D2D2D2"
+            }
         })
-        if(fdFillData[0] !== undefined){
-            return partycolors[settings.year][settings.party];
-        }else{
-            return "#D2D2D2"
-        }
-    })
     
     d3.select("#seats-of-party").style("color", partycolors[settings.year][settings.party])
         .html(filldata.length + "/"+ mapdata.length)
     
 
 } // end of mapfunction
-
-// function displayConstituency(){
-
-//     var chosenOption = $("#const-list").val();
-
-//     d3.selectAll(".const").attr("stroke", "#fff").attr("stroke-width", "0.5")
-    
-//     d3.select(".c"+chosenOption).attr("stroke", "black").attr("stroke-width", "5")
-
-//     filterNDisplay2017(parseInt(chosenOption));
-
-// }
-
-
-// function filterNDisplay2017(acno){
-    
-//     var fdTrendData2017 = constwisetrenddata2017.filter(function(obj){
-//         return obj["constNo"] === acno;
-//     })
-
-//     d3.select(".const_name").html(fdTrendData2017[0]["constituency"])
-//     d3.select(".status").html(fdTrendData2017[0]["status"])
-//     d3.select(".leadCandName").html(fdTrendData2017[0]["leadingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["leadingParty"]]+")</span>")
-//     d3.select(".trailingCandName").html(fdTrendData2017[0]["trailingCandidate"] + " <span>("+party_abrev[fdTrendData2017[0]["trailingParty"]]+")</span>")
-//     d3.select(".margin").html(fdTrendData2017[0]["margin"].toLocaleString('en-IN'))
-// }

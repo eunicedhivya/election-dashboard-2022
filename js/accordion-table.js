@@ -1,5 +1,7 @@
 function drawAccTable(data, selector, labels, textLabels){
 	// console.log("Share data:"+data);
+    d3.select(selector).html('')
+    
     var table = d3.select(selector).append('table')
     var thead = table.append('thead')
     var	tbody = table.append('tbody')

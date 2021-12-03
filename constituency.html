@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="css/constituency.css">
     <style>
-       
+       svg{
+           width: 100%;
+       }
     </style>
 </head>
         
@@ -200,26 +202,12 @@
     <script src="js/map-constituency.js"></script>
     <script src="js/accordion-table.js"></script>
     <script>
-        // Chosen State and Constituency
-        var chosenState = "up";
-        var chosenConst = 1;
+      
 
-        // import topojson map for State
-        var assemplyconstmap_up = (function() {
-            assemplyconstmap_up = null;
-            jQuery.ajax({
-                'async': false,
-                'global': false,
-                'dataType': 'json',
-                'cache': false,
-                'url': 'assets/maps/up-v2.json',
-                'success': function(stateShape) {
-                    assemplyconstmap_up = topojson.feature(stateShape, stateShape.objects.collection).features;
-                    
-                }
-            });
-            return assemplyconstmap_up;
-        })();        
+        // Chosen State and Constituency
+        var chosenState = "pb";
+        var chosenConst = 2;
+              
 
         // import Data API for Constituency  
         var constwisetrenddata2017 = (function() {
@@ -229,12 +217,28 @@
                 'global': false,
                 'dataType': 'json',
                 'cache': false,
-                'url': 'assets/data/dataset.json',
+                'url': 'assets/data/dataset-constituency.json',
                 'success': function(data) {
                     constwisetrenddata2017 = data;
                 }
             });
-            return constwisetrenddata2017;
+            return constwisetrenddata2017[chosenState];
+        })();
+
+        // import topojson map for State
+        var assemplyconstmap_up = (function () {
+            assemplyconstmap_up = null;
+            jQuery.ajax({
+                'async': false,
+                'global': false,
+                'dataType': 'json',
+                'cache': false,
+                'url': constwisetrenddata2017.stateURL,
+                'success': function (stateShape) {
+                    assemplyconstmap_up = topojson.feature(stateShape, stateShape.objects.collection).features;
+                }
+            });
+            return assemplyconstmap_up;
         })();
 
         // Create statemap with all constituencies
@@ -245,8 +249,8 @@
             defaultconst: chosenConst, 
             constnokey: 'ac', 
             constnamekey: 'ac_name', 
-            scale: 2500, 
-            center: [80.9462, 27.2], 
+            scale: constwisetrenddata2017.stateScale, 
+            center: constwisetrenddata2017.stateCenter, 
             inset: true,
             enableEvents: false
         })   
@@ -257,7 +261,7 @@
         })
 
         // Get the current constituency data from dataset
-        var getConstData = constwisetrenddata2017["up"]["constituencydata"].filter(function (object) {
+        var getConstData = constwisetrenddata2017["constituencyData"].filter(function (object) {
             return object.constId === chosenConst;
         })
 
@@ -284,7 +288,7 @@
 
         // About Demographics
         // var demographicData = getConstData[0]["demographics"]
-        document.getElementById("totalVoters").innerHTML = formatNumberInd(getConstData[0].totalElectorate);
+        document.getElementById("totalVoters").innerHTML = formatNumberInd(getConstData[0].totalVoters);
         document.getElementById("maleVoters").innerHTML = formatNumberInd(getConstData[0].maleVoters);
         document.getElementById("femaleVoters").innerHTML = formatNumberInd(getConstData[0].femaleVoters);
         document.getElementById("thirdGender").innerHTML = formatNumberInd(getConstData[0].thirdGender)  ;      

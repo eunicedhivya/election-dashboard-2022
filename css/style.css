@@ -13,18 +13,18 @@
   font-size: 40px;
   font-weight: 700;
   line-height: 44px;
-  margin: 0 0 25px 0;
+  margin: 0 0 20px 0;
 }
 .tv9-dashboard .container p {
   font-size: 16px;
   /* margin: 0 0 25px 0; */
 }
-/* .barchart-section,
-.map-section {
-  width: 100%;
-  max-width: 650px;
-  margin: 0 auto;
-} */
+
+.dash-intro p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+}
 
 .horstackchart {
   margin-bottom: 20px;
@@ -36,27 +36,14 @@
   margin-top: 45px;
 }
 
-.horbarchart::before {
-  content: attr(data-label);
-  position: absolute;
-  left: 50%;
-  top: -30px;
-  width: 50%;
-  transform: translateX(-50%);
-  padding-left: 0;
-  font-weight: 700;
-  font-size: 15px;
-  text-align: center;
-}
-.horbarchart::after {
-  content: "";
+.block {
+  /* transition: all 0.3s; */
+  cursor: pointer;
   width: 0;
-  height: 45px;
-  position: absolute;
-  border: 1px dotted black;
-  background-color: transparent;
-  top: -10px;
-  left: 50%;
+}
+
+.block:hover {
+  background-color: #ccc !important;
 }
 
 .yearwisefilters {
@@ -68,22 +55,25 @@
 
 .filterBtns {
   background-color: #a5a5a5;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: 12px;
   font-size: 19px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 15px;
   letter-spacing: 0em;
   text-align: center;
   outline: none;
   border: none;
   display: inline-block;
-  margin-bottom: 10px;
+  margin-right: 10px;
   color: #fff;
 }
 .filterBtns.active {
   background-color: #000000;
+}
+.filterBtns:last-child {
+  margin-right: 0;
 }
 
 .map svg {
@@ -123,7 +113,10 @@
 .card-body .point-content p {
   margin: 0 0 0 0;
   text-transform: uppercase;
-  font-size: 15px;
+  font-size: 14px;
+}
+.point-content span {
+  font-size: 22px;
 }
 .card-body .point:nth-child(2) .point-content p:first-child,
 .card-body .point:nth-child(3) .point-content p:first-child {
@@ -188,9 +181,20 @@
   text-decoration: none;
   font-size: 14px;
 }
+.alliance-section {
+  margin: 0 0 40px 0;
+}
+.alliance-section h2 {
+  font-size: 11px;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+}
 .alliance-list {
   list-style: none;
   text-align: center;
+  font-size: 11px;
+  padding: 0;
+  margin: 0;
 }
 .map path:hover {
   fill: #000000;
